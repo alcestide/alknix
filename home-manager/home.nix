@@ -1,43 +1,45 @@
 {inputs, outputs, config, pkgs, ... }:
 
 {
-  home.username = "alcestide";
-  home.homeDirectory = "/home/alcestide";
+  home = {
+    username = "alcestide";
+    homeDirectory = "/home/alcestide";
+      packages = with pkgs; [
+        nix-search-cli
+        zsh
+        oh-my-zsh
+        zip
+        xz
+        unzip
+        p7zip
+        ripgrep
+        jq     
+        yq-go    
+        eza
+        zoxide
+        psmisc 
+        fzf    
+        mtr    
+        iperf
+        dnsutils      
+        nmap    
+        ipcalc  
+        tree
+        nix-output-monitor
+        lsof
+        sysstat
+        lm_sensors 
+        ethtool
+        pciutils 
+        usbutils
+        telegram-desktop
+        feishin
+        feh
+        rofi
+	    pywal
+      ];
 
-  home.packages = with pkgs; [
-	nix-search-cli
-	zsh
-	oh-my-zsh
-    	zip
-    	xz
-    	unzip
-    	p7zip
-    	ripgrep
-    	jq     
-	yq-go    
- 	eza
-	zoxide
-	psmisc 
- 	fzf    
- 	mtr    
-	iperf
-	dnsutils      
-	nmap    
- 	ipcalc  
-	tree
-    	nix-output-monitor
-    	lsof
-    	sysstat
-    	lm_sensors 
-    	ethtool
-    	pciutils 
-    	usbutils
-	telegram-desktop
-	feishin
-	feh
-	rofi
-	pywal
-  ];
+    };
 
   programs = {
 	git = {
@@ -79,7 +81,8 @@
 		shellAliases = {
 		    sudo = "sudo ";
 		    garb = "sudo nix-collect-garbage --delete-older-than 1d";
-		    vim = "nix run github:alcestide/nixvim";
+            vim = "nix run github:alcestide/nixvim";
+            ls = "exa -la";
 		    ll = "ls -l";
 		    rb = "sudo nixos-rebuild switch";
 		  };
