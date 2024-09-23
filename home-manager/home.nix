@@ -1,7 +1,6 @@
 {inputs, outputs, config, pkgs, ... }:
 
 {
-
   home.username = "alcestide";
   home.homeDirectory = "/home/alcestide";
 
@@ -34,7 +33,7 @@
     	pciutils 
     	usbutils
 	telegram-desktop
-	#feishin
+	feishin
 	feh
 	rofi
 	pywal
@@ -80,6 +79,7 @@
 		shellAliases = {
 		    sudo = "sudo ";
 		    garb = "sudo nix-collect-garbage --delete-older-than 1d";
+		    vim = "nix run github:alcestide/nixvim";
 		    ll = "ls -l";
 		    rb = "sudo nixos-rebuild switch";
 		  };

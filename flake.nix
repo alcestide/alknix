@@ -7,12 +7,15 @@
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim.url = "github:alcestide/nixvim";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ nixpkgs, nixvim, home-manager, ... }: {
+
     nixosConfigurations = {
       alknix = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+	specialArgs = {inherit inputs; };
         modules = [
           ./nixos/configuration.nix
 

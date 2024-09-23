@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
@@ -69,6 +69,7 @@
   programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
+	inputs.nixvim.packages.${system}.default
 	edk2-uefi-shell
 	ntfs3g
 	htop
