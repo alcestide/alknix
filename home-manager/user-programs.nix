@@ -85,5 +85,7 @@
         enable = true;
         #enableGnomeExtensions = true;
       };
+      
+      waybar.enable = true;
     };
     }

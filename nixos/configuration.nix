@@ -50,8 +50,11 @@ environment.systemPackages = with pkgs; [
   hardware.pulseaudio.enable = false;
   users.defaultUserShell = pkgs.zsh;
   environment.shells = with pkgs; [ zsh ];
-
-
+  /*
+  environment.sessionVariables = rec {
+  	HYPRSHOT_DIR= "$HOME/Pictures/Screenshots";
+	};
+*/
   catppuccin.flavor = "mocha";
   catppuccin.enable = true;
 
