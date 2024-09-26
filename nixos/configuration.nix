@@ -1,24 +1,15 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 
 {
   imports =
     [ 
-      	./hardware-configuration.nix
+        ./bootloader.nix
+        ./networking.nix
+        ./programs.nix
+        ./services.nix
+        ./fonts.nix
+        ./hardware-configuration.nix
     ];
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  nixpkgs.config.permittedInsecurePackages = [
-                "electron-24.8.6"
-              ];
-
-  nixpkgs.config.allowUnfree = true;
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "alknix"; # Define your hostname.
-  networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -34,29 +25,35 @@
     LC_TIME = "it_IT.UTF-8";
   };
 
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+environment.systemPackages = with pkgs; [
+    gcc
+	git
+	htop
+	ntfs3g
+  	vim
+	mpv
+   	waybar
+	tokyonight-gtk-theme
+	sassc
+	gtk-engine-murrine
+	gnome-themes-extra
+	libsForQt5.qt5.qtgraphicaleffects
+  ];
 
-  services.openssh.enable = true;
-  services.printing.enable = true;
-  hardware.pulseaudio.enable = false;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.permittedInsecurePackages = [
+                "electron-24.8.6"
+              ];
+  nixpkgs.config.allowUnfree = true;
+  nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 1d"; }; 
   security.rtkit.enable = true;
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-};
-
-  programs.zsh.enable = true;
+  hardware.pulseaudio.enable = false;
   users.defaultUserShell = pkgs.zsh;
   environment.shells = with pkgs; [ zsh ];
+
+
+  catppuccin.flavor = "mocha";
+  catppuccin.enable = true;
 
   users.users.alcestide = {
     isNormalUser = true;
@@ -66,31 +63,5 @@
     ];
   };
 
-  programs.firefox.enable = true;
-
-  environment.systemPackages = with pkgs; [
-	inputs.nixvim.packages.${system}.default
-	edk2-uefi-shell
-	ntfs3g
-	htop
-	git
-	mpv
-  	vim
-  ];
-
-  fonts.packages = with pkgs; [
-	  noto-fonts
-	  noto-fonts-cjk
-	  noto-fonts-emoji
-	  liberation_ttf
-	  fira-code
-	  fira-code-symbols
-	  mplus-outline-fonts.githubRelease
-	  dina-font
-	  proggyfonts
-	  nerdfonts
-  ];
-
-  nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 1d"; }; 
   system.stateVersion = "24.05"; 
 }

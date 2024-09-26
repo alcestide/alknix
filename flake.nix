@@ -4,9 +4,13 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixvim.url = "github:alcestide/nixvim";
+    nixvim = {
+      url = "github:alcestide/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     flake-utils.url = "github:numtide/flake-utils";
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = {
@@ -15,6 +19,8 @@
     #nixpkgs-unstable,
     flake-utils,
     home-manager,
+    catppuccin,
+    nixvim,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -34,11 +40,14 @@
       alknix = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [./nixos/configuration.nix 
+                    catppuccin.nixosModules.catppuccin
                    home-manager.nixosModules.home-manager {
                     home-manager = { 
                     useGlobalPkgs = true;
                     useUserPackages = true;
-                    users.alcestide = import ./home-manager/home.nix; 
+                    users.alcestide = { imports = [ ./home-manager/home.nix
+                                                    #nixvim.homeManagerModules.nixvim
+                                                    catppuccin.homeManagerModules.catppuccin];};
                   };}];
                 };};
                 };
