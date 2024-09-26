@@ -11,8 +11,12 @@
   home = {
     username = "alcestide";
     homeDirectory = "/home/alcestide";
+    sessionVariables = { 
+        HYPRSHOT_DIR="/home/alcestide/Pictures/Screenshots";
+    };
+
     packages = with pkgs; [
-	    nixos-generators
+	nixos-generators
         nix-search-cli
         nix-output-monitor
         zsh
@@ -28,8 +32,6 @@
         zoxide
         ranger
         gnomeExtensions.dash-to-dock
-        gnome.gpaste
-        gnome.gnome-screenshot
         cinnamon.nemo-with-extensions
         xfce.thunar
         firefox
@@ -65,6 +67,15 @@
         libnotify
         dunst
 	    xwayland
+	    wl-clipboard
+        playerctl
+	    pulseaudio
+	    coreutils-prefixed
+	    grim
+	    slurp
+	    swappy
+	    xclip
+	    hyprshot
       ];
 
     };
