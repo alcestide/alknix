@@ -1,21 +1,5 @@
-{pkgs, ... }:
-
-{
-
-  imports = [
-    ./dunst/dunst.nix
-    ./gtk.nix
-    ./user-programs.nix
-    ];
-
-  home = {
-    username = "alcestide";
-    homeDirectory = "/home/alcestide";
-    sessionVariables = { 
-        HYPRSHOT_DIR="/home/alcestide/Pictures/Screenshots";
-    };
-
-    packages = with pkgs; [
+{pkgs,inputs,...}:
+{ home.packages = with pkgs; [
 	nixos-generators
         nix-search-cli
         nix-output-monitor
@@ -27,7 +11,9 @@
         p7zip
         ripgrep
         jq     
-        yq-go    
+        yq-go
+        hugo
+        go
         eza
         zoxide
         ranger
@@ -77,11 +63,4 @@
 	    xclip
 	    hyprshot
       ];
-
-    };
-
-  qt.enable = true;
-  home.stateVersion = "23.11";
-  programs.home-manager.enable = true;
-
-}
+    }
