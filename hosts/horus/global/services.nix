@@ -2,8 +2,7 @@
 {
   
   services = {
-
-    xserver.enable = true;
+    displayManager.sddm.wayland.enable = true;
     displayManager.sddm.enable = true;
     displayManager.sddm.theme = lib.mkForce "${import ../derivations/sddm-theme.nix { inherit pkgs; }}";
     displayManager.sddm.catppuccin.assertQt6Sddm = false;

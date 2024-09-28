@@ -1,4 +1,13 @@
-{ pkgs, host, username, lib, inputs, outputs, system, ... }:
+{ pkgs, host, username, lib, inputs, outputs, system, nixvim,... }:
+
+# Nixvim Configuration and Set-up
+
+let
+	neovimconfig = import ./nixvim/config;
+nvim = nixvim.legacyPackages.x86_64-linux.makeNixvimWithModule {
+	inherit pkgs;
+	module = neovimconfig;};
+in
 
 {
   imports =
@@ -26,6 +35,7 @@
   };
 environment.shells = with pkgs; [ zsh ];
 environment.systemPackages = [
+    nvim
     pkgs.gcc
 	pkgs.git
 	pkgs.htop
@@ -40,7 +50,6 @@ environment.systemPackages = [
     pkgs.nodePackages.yaml-language-server
     pkgs.nodePackages.vim-language-server
   ];
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.permittedInsecurePackages = ["electron-24.8.6"];
   nixpkgs.config.allowUnfree = true;

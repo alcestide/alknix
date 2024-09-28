@@ -1,4 +1,4 @@
-{pkgs, ... }:
+{pkgs,inputs, ... }:
 
 {
   programs = {
@@ -46,8 +46,8 @@
 		shellAliases = {
 		    sudo = "sudo ";
 		    garb = "sudo nix-collect-garbage --delete-older-than 1d";
+            vim = "nvim";
             nixvim = "nix run github:alcestide/nixvim --";
-            vim = "nvim ";
             ls = "exa -la";
 		    ll = "ls -l";
 		    rb = "sudo nixos-rebuild switch";
