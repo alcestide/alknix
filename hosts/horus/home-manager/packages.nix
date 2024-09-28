@@ -1,4 +1,6 @@
 {pkgs,inputs,...}:
+
+
 { home.packages = with pkgs; [
 	nixos-generators
         nix-search-cli

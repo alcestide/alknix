@@ -1,4 +1,4 @@
-{inputs,username,... }:
+{pkgs,config,inputs,username,... }:
 
 {
 
@@ -15,6 +15,7 @@
     home.sessionVariables = { 
         HYPRSHOT_DIR="/home/alcestide/Pictures/Screenshots";
     };
+
 
   qt.enable = true;
   home.stateVersion = "23.11";

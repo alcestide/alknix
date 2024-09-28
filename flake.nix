@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixvim = {
-      url = "github:alcestide/nixvim";
+      url = "github:nix-community/nixvim/update/nixos-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager.url = "github:nix-community/home-manager/release-24.05";
@@ -42,11 +42,12 @@
       });
   in {
     inherit lib;
-    overlays = import ./hosts/${host}/overlays {inherit inputs host;};
+    #overlays = import ./hosts/${host}/overlays {inherit inputs host;};
     nixosConfigurations = {
       "${host}" = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs username host;};
+        specialArgs = {inherit inputs outputs username host nixvim;};
         modules = [./hosts/${host}/global/configuration.nix 
+                    nixvim.nixosModules.nixvim
                     catppuccin.nixosModules.catppuccin
                     home-manager.nixosModules.home-manager {
                 home-manager = { 
@@ -55,8 +56,10 @@
                     users.${username} = 
                     { imports = 
                     [ ./hosts/${host}/home-manager/home.nix
-                        #nixvim.homeManagerModules.nixvim
-                        catppuccin.homeManagerModules.catppuccin];};
+			
+                        catppuccin.homeManagerModules.catppuccin
+			
+			];};
                         };
                 }];
             };
