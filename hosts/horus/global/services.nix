@@ -16,13 +16,14 @@
       pulse.enable = true;
     };
 
+    gvfs.enable = true;
     navidrome = {
       enable = false;
       settings = { MusicFolder = "/mnt/disk1/Music";};
       openFirewall = true;
     };
     syncthing = {
-      enable = false;
+      enable = true;
       user = username;
       dataDir = "/home/${username}/Documents";
       configDir = "/home/${username}//Documents/.config/syncthing";
