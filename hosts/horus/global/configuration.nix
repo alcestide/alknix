@@ -3,10 +3,10 @@
 # Nixvim Configuration and Set-up
 
 let
-	neovimconfig = import ./nixvim/config;
-nvim = nixvim.legacyPackages.x86_64-linux.makeNixvimWithModule {
+	nixvim-config = import ./nixvim/config;
+alknixvim = nixvim.legacyPackages.x86_64-linux.makeNixvimWithModule {
 	inherit pkgs;
-	module = neovimconfig;};
+	module = nixvim-config;};
 in
 
 {
@@ -35,14 +35,15 @@ in
   };
 environment.shells = with pkgs; [ zsh ];
 environment.systemPackages = [
-    nvim
+    alknixvim
     pkgs.gcc
 	pkgs.git
-	pkgs.htop
+    pkgs.htop
 	pkgs.ntfs3g
   	pkgs.vim
 	pkgs.mpv
    	pkgs.waybar
+    pkgs.networkmanagerapplet
 	pkgs.gnome-themes-extra
 	pkgs.libsForQt5.qt5.qtgraphicaleffects
     pkgs.nodePackages.dockerfile-language-server-nodejs

@@ -63,6 +63,8 @@
 	    slurp
 	    swappy
 	    xclip
-	    hyprshot
+        hyprshot
+        zathura
+        nicotine-plus
       ];
     }

@@ -29,6 +29,6 @@
       };
       };
       */
-    configFile = "/etc/nixos/home-manager/dunst/dunstrc";
+    configFile = "/etc/nixos/hosts/horus/home-manager/dunst/dunstrc";
   };
 }
