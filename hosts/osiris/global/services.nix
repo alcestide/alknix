@@ -4,6 +4,7 @@ services = {
   printing.enable = true;
   openssh.enable = true;
   adguardhome.enable = true;
+
  /*
   dnsmasq = {
 	enable = true;
@@ -20,7 +21,9 @@ services = {
   navidrome = {
 	enable = true;
 	settings = { MusicFolder ="/mnt/disk1/Music";
-		     Address = "0.0.0.0";};
+		     Address = "0.0.0.0";
+		     ScanSchedule = "@every 5m";
+		   };
 	openFirewall = true;
 
 };
@@ -43,8 +46,6 @@ services = {
   
   vsftpd = {
     enable = true;
-#   cannot chroot && write
-#    chrootlocalUser = true;
     writeEnable = true;
     localUsers = true;
     userlist = [ "alcestide" ];
