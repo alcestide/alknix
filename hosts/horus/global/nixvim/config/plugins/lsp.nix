@@ -25,9 +25,24 @@
         # Rust
         rust-analyzer = {
           enable = true;
-          installRustc = true;
-          installCargo = true;
+          installRustc = false;
+          installCargo = false;
+          settings = {
+            completion.fullFunctionSignatures.enable = true;
+            checkOnSave = true;
+            check = {command = "clippy";};
+            procMacro = {enable = true;};
+            lens = {
+              implementations.enable = true;
+              references = {
+                method.enable = true;
+                adt.enable = true;
+                trait.enable = true;
+                enumVariant.enable = true;
+              };
         };
       };
     };
-  }
+  };
+};
+}

@@ -22,6 +22,8 @@
         gnomeExtensions.dash-to-dock
         cinnamon.nemo-with-extensions
         xfce.thunar
+        xfce.tumbler
+        xfce.xfconf
         firefox
         telegram-desktop
 	    filezilla
@@ -47,10 +49,12 @@
         feh
         pywal
         pavucontrol
+        qbittorrent
         polybar
         waybar
 	    wofi
         hyprpaper
+        hyprlock
         nwg-look
         libnotify
         dunst
@@ -59,6 +63,7 @@
         playerctl
 	    pulseaudio
 	    coreutils-prefixed
+        rustup
 	    grim
 	    slurp
 	    swappy
@@ -66,5 +71,10 @@
         hyprshot
         zathura
         nicotine-plus
+        yt-dlp
+        gallery-dl
+        picard
+        catppuccin-qt5ct
+    
       ];
     }

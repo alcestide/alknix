@@ -21,17 +21,7 @@
   } @ inputs: let
     inherit (self) outputs;
     lib = nixpkgs.lib // home-manager.lib;
-
-    # -------------------
-    # horus: main rig
-    # osiris: home-server
-    # ---------------------------------------
-    # nixos-rebuild- --switch --flake .#{HOST}
-    # ---------------------------------------
-
-    # Change host
     host = "horus";
-
     username = "alcestide";
     systems = ["x86_64-linux"];
     pkgsFor = lib.genAttrs systems (system:

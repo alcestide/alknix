@@ -22,7 +22,10 @@
       action = "<cmd>Telescope man_pages<CR>";
       key = "<leader>fm";
     }
-
+    {
+      action = "<cmd>:lua vim.lsp.buf.hover()<CR>";
+      key = "K";
+    }
     {
       mode = "n";
       key = "<Tab>";

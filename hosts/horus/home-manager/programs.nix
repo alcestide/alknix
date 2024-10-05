@@ -1,9 +1,6 @@
 {pkgs,inputs, ... }:
 
 {
-
- 
-
   programs = {
       git = {
 	    enable = true;
@@ -51,8 +48,8 @@
 		    garb = "sudo nix-collect-garbage --delete-older-than 1d";
             vim = "nvim";
             nixvim = "nix run github:alcestide/nixvim --";
-            ls = "exa -la";
-		    ll = "ls -l";
+            ls = "exa";
+		    ll = "exa -l";
 		    rb = "sudo nixos-rebuild switch";
 		  };
 		oh-my-zsh = {

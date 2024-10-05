@@ -7,6 +7,7 @@
     displayManager.sddm.theme = lib.mkForce "${import ../derivations/sddm-theme.nix { inherit pkgs; }}";
     displayManager.sddm.catppuccin.assertQt6Sddm = false;
     displayManager.defaultSession = "hyprland";
+    xserver.desktopManager.kodi.enable = true;
     openssh.enable = true;
     printing.enable = true;
     pipewire = {
@@ -28,6 +29,18 @@
       dataDir = "/home/${username}/Documents";
       configDir = "/home/${username}//Documents/.config/syncthing";
     };
-
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+    };
+    plex = {
+      enable = true;
+      openFirewall = true;
+    };
+udev = {
+    extraRules = ''
+      SUBSYSTEM=="usbmon", GROUP="wireshark", MODE="0640"
+    '';
+  };
   };
 }
