@@ -23,6 +23,20 @@ virtualisation.oci-containers = {
           "/home/alcestide/.config/smokeping/data:/data"
         ];
 	};
+	picard = {
+		image = "mikenye/picard:latest";
+		ports = ["5800:5800"];
+		environment = {
+			PUID = "1001";
+			PGID = "1001";
+			TZ = "Europe/Rome";
+		};
+
+		volumes = [
+			"/home/alcestide/.config/picard:/config:rw"
+			"/mnt/disk1/Music:/storage:rw"
+			];
+		};
 	calibre-web = {
 		image = "lscr.io/linuxserver/calibre-web:latest";
 		environment = {

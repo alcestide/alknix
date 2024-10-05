@@ -9,4 +9,5 @@
   networking.nameservers = [ "1.1.1.1" ];
   networking.firewall.enable = false;
   networking.firewall.allowedTCPPorts = [ 22 4533 8384 ];
+  networking.hostName = "osiris";
 }
