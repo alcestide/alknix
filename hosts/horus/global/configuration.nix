@@ -41,7 +41,8 @@ environment.systemPackages = [
     pkgs.htop
 	pkgs.ntfs3g
   	pkgs.vim
-	pkgs.mpv
+    pkgs.mpv
+    pkgs.rclone
    	pkgs.waybar
     pkgs.networkmanagerapplet
 	pkgs.gnome-themes-extra
@@ -67,6 +68,9 @@ environment.systemPackages = [
     packages = with pkgs; [
     ];
   };
+
+security.polkit.enable = true;
+
 
   system.stateVersion = "24.05"; 
 }

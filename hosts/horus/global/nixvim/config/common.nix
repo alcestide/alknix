@@ -25,8 +25,6 @@
       enable = true;
     };
 
-
-
     notify = {
       enable = true;
       backgroundColour = "#1e1e2e";
@@ -71,6 +69,9 @@
       };
     };
 
+    which-key = {
+      enable = true;
+    };
     undotree = {
       enable = true;
       settings = {
@@ -86,7 +87,6 @@
         "Outline"
         "TelescopePrompt"
         "alpha"
-        "harpoon"
         "reason"
       ];
     };
