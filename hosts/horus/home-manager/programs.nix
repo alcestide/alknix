@@ -88,5 +88,7 @@
       };
       
       waybar.enable = true;
+
+
     };
     }
