@@ -6,21 +6,31 @@
     }
 
     {
-      action = "<cmd>Telescope find_files<CR>";
+      action = "<cmd>FzfLua files<CR>";
       key = "<leader>ff";
     }
     {
-      action = "<cmd>Telescope live_grep<CR>";
+      action = "<cmd>FzfLua live_grep<CR>";
       key = "<leader>fg";
     }
     
     {
-      action = "<cmd>Telescope colorscheme<CR>";
-      key = "<leader>ch";
+      action = "<cmd>FzfLua buffers<CR>";
+      key = "<leader>fb";
+    }
+
+    {
+      action = "<cmd>FzfLua oldfiles<CR>";
+      key = "<leader>fh";
+    }
+
+    {
+      action = "<cmd>FzfLua builtin<CR>";
+      key = "<leader>fz";
     }
     {
-      action = "<cmd>Telescope man_pages<CR>";
-      key = "<leader>fm";
+      action = "<cmd>UndotreeToggle<CR>";
+      key = "<F5>";
     }
     {
       action = "<cmd>:lua vim.lsp.buf.hover()<CR>";

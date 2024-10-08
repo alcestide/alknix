@@ -25,6 +25,18 @@
       enable = true;
     };
 
+    spectre = {
+      enable = true;
+    };
+
+    leap = {
+      enable = true;
+    };
+
+    fzf-lua = {
+      enable = true;
+    };
+
     notify = {
       enable = true;
       backgroundColour = "#1e1e2e";
@@ -60,14 +72,6 @@
       enable = true;
     };
 
-    telescope = {
-      enable = true;
-      extensions = {
-        fzf-native = {
-          enable = true;
-        };
-      };
-    };
 
     which-key = {
       enable = true;

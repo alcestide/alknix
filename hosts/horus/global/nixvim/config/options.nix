@@ -12,9 +12,10 @@
     smarttab = true;
     clipboard = "unnamedplus";
     cursorline = true;
-    ruler = true;
+    #ruler = true;
     gdefault = true;
     scrolloff = 5;
+    undofile = true;
   };
 
   globals.mapleader = " ";
