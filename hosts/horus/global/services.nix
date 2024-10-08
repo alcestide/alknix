@@ -23,6 +23,7 @@
       settings = { MusicFolder = "/mnt/disk1/Music";};
       openFirewall = true;
     };
+    tumbler.enable = true;
     syncthing = {
       enable = true;
       user = username;

@@ -20,6 +20,12 @@ in
         ./hardware-configuration.nix
     ];
 
+  fileSystems."/mnt/disk1" =
+    { device = "/dev/disk/by-uuid/0889E01051FF80FB";
+      fsType = "ntfs-3g"; 
+      options = [ "rw" "uid=1000"];
+    };
+
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
@@ -45,8 +51,9 @@ environment.systemPackages = [
     pkgs.rclone
    	pkgs.waybar
     pkgs.networkmanagerapplet
-	pkgs.gnome-themes-extra
-	pkgs.libsForQt5.qt5.qtgraphicaleffects
+    pkgs.gnome-themes-extra
+        pkgs.
+        pkgs.libsForQt5.qt5.qtgraphicaleffects
     pkgs.nodePackages.dockerfile-language-server-nodejs
     pkgs.python3Packages.python-lsp-server
     pkgs.nodePackages.yaml-language-server
@@ -69,8 +76,8 @@ environment.systemPackages = [
     ];
   };
 
-security.polkit.enable = true;
-
-
+  security.polkit.enable = true;
+  #virtualisation.libvirtd.enable = true;
+  #programs.virt-manager.enable = true;
   system.stateVersion = "24.05"; 
 }

@@ -1,10 +1,11 @@
 {pkgs,inputs,...}:
 
-
 { home.packages = with pkgs; [
 	nixos-generators
         nix-search-cli
         nix-output-monitor
+        xfce.xfconf
+        lxde.lxsession
         zsh
         oh-my-zsh
         zip
@@ -12,24 +13,6 @@
         unzip
         p7zip
         ripgrep
-        jq     
-        yq-go
-        hugo
-        go
-        eza
-        zoxide
-        ranger
-        gnomeExtensions.dash-to-dock
-        cinnamon.nemo-with-extensions
-        xfce.thunar
-        xfce.tumbler
-        xfce.xfconf
-        firefox
-        telegram-desktop
-	    filezilla
-        obsidian
-        flameshot
-        redshift
         psmisc 
         fzf    
         mtr    
@@ -44,37 +27,56 @@
         ethtool
         pciutils 
         usbutils
-        feishin
-        font-manager
-        feh
-        pywal
-        pavucontrol
-        qbittorrent
-        polybar
-        waybar
-	    wofi
-        hyprpaper
-        hyprlock
-        nwg-look
-        libnotify
-        dunst
-	    xwayland
-	    wl-clipboard
-        playerctl
-	    pulseaudio
-	    coreutils-prefixed
+        pptp
+        pptpd
+        ppp
+        jq     
+        yq-go
+        nodejs
         rustup
-	    grim
-	    slurp
-	    swappy
-	    xclip
-        hyprshot
-        zathura
-        nicotine-plus
+        hugo
+        go
+        eza
+        zoxide
+        ranger
+        grim
+        slurp
+        swappy
+        xclip
+        feh
+        pywal        
+        waybar
+        wofi
+        xwayland
+        wl-clipboard
+        wireguard-tools
         yt-dlp
         gallery-dl
+        playerctl
+        pulseaudio
+        coreutils-prefixed
+        dunst
+        libnotify
+        hyprpaper
+        hyprlock
+        hyprshot 
+        nwg-look
+
+        # Desktop Apps
+        firefox
+        telegram-desktop
+        filezilla
+        qbittorrent
+        gparted
+        obsidian
+        vscode
+        feishin
+        gimp
+        inkscape
+        font-manager
+        zathura
+        nicotine-plus
         picard
-        catppuccin-qt5ct
     
       ];
     }
