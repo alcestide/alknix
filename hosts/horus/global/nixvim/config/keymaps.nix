@@ -31,7 +31,12 @@
     {
       action = "<cmd>UndotreeToggle<CR>";
       key = "<F5>";
+    } 
+    {
+      action = "<cmd>ToggleTerm<CR>";
+      key = "<leader>t";
     }
+
     {
       action = "<cmd>:lua vim.lsp.buf.hover()<CR>";
       key = "K";

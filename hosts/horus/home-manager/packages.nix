@@ -38,17 +38,19 @@
         go
         eza
         zoxide
-        ranger
+        #ranger
         grim
         slurp
         swappy
         xclip
         feh
         pywal        
-        waybar
+        #waybar
         wofi
         xwayland
         wl-clipboard
+        wlsunset
+        wdisplays
         wireguard-tools
         yt-dlp
         gallery-dl
@@ -57,16 +59,21 @@
         coreutils-prefixed
         dunst
         libnotify
-        hyprpaper
-        hyprlock
+        #hyprpaper
+        #hyprlock
         hyprshot 
+        hyprcursor
         nwg-look
+        swtpm
+        ueberzugpp
 
         # Desktop Apps
-        firefox
+        #firefox
+        chromium
         telegram-desktop
         filezilla
         qbittorrent
+        pavucontrol
         gparted
         obsidian
         vscode

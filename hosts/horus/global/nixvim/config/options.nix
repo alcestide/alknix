@@ -1,5 +1,6 @@
 {self, ...}: {
   globalOpts = {
+    undofile = true;
     number = true;
     relativenumber = true;
     signcolumn = "yes";
@@ -15,7 +16,6 @@
     #ruler = true;
     gdefault = true;
     scrolloff = 5;
-    undofile = true;
   };
 
   globals.mapleader = " ";

@@ -2,6 +2,7 @@
 
 {
   programs = {
+
       git = {
 	    enable = true;
 	    userName = "Angelo Panariti";
@@ -21,6 +22,7 @@
 			bind - split-window -v\n
 			bind -n M-Left select-pane -L\n
 			bind -n M-Right select-pane -R\n
+
 			bind -n M-Up select-pane -U\n
 			bind -n M-Down select-pane -D\n
 			set -g visual-activity off\n
@@ -51,12 +53,14 @@
             ls = "exa";
 		    ll = "exa -l";
 		    rb = "sudo nixos-rebuild switch";
+            pptp-lecce = "sudo pon pptp-lecce debug dump logfd 2 nodetach";
 		  };
 		oh-my-zsh = {
 		  enable = true;
 		  plugins = [ ];
-		  theme = "agnoster";
-		};
+          theme = "agnoster";
+        };
+
 		history = {
 		size = 10000;
       };
@@ -84,10 +88,13 @@
 
       firefox = {
         enable = true;
-        #enableGnomeExtensions = true;
       };
       
-      waybar.enable = true;
+      #waybar.enable = true;
+      ranger = {
+        enable = true;
+        extraConfig = "set preview_images true\nset preview_images_method ueberzug";
+      };
 
 
     };
