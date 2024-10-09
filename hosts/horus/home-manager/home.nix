@@ -4,25 +4,29 @@
 
   imports = [
     ./dunst/dunst.nix
-    #./nixvim.nix
     ./gtk.nix
     ./packages.nix
     ./programs.nix
+    ./hypr/hypr.nix
     ];
 
-    home.username = "alcestide";
-    home.homeDirectory = "/home/alcestide";
-    home.sessionVariables = { 
+    home = {
+      username = "alcestide";
+      homeDirectory = "/home/alcestide";
+      sessionVariables = { 
       HYPRSHOT_DIR="/home/alcestide/Pictures/Screenshots";
-      NICOTINE_LIBADWAITA=1;
+      };
     };
 
-
     qt = {
-      enable = true;
-      platformTheme.name = "qtct";
-      style.name = "catppuccin";
-  };
+        enable = true;
+        platformTheme.name = "gtk";
+        style = {
+          name = "gtk2";
+          package = pkgs.libsForQt5.breeze-qt5;
+        };
+      };
+
   home.stateVersion = "23.11";
   programs.home-manager.enable = true;
 

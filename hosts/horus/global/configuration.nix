@@ -19,14 +19,13 @@ in
         ./fonts.nix
         ./hardware-configuration.nix
     ];
-
   fileSystems."/mnt/disk1" =
     { device = "/dev/disk/by-uuid/0889E01051FF80FB";
       fsType = "ntfs-3g"; 
       options = [ "rw" "uid=1000"];
     };
 
-  time.timeZone = "Europe/Rome";
+    time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "it_IT.UTF-8";
@@ -52,7 +51,8 @@ environment.systemPackages = [
    	pkgs.waybar
     pkgs.networkmanagerapplet
     pkgs.gnome-themes-extra
-        pkgs.
+    pkgs.libsForQt5.qtstyleplugin-kvantum
+    pkgs.libsForQt5.qt5ct
         pkgs.libsForQt5.qt5.qtgraphicaleffects
     pkgs.nodePackages.dockerfile-language-server-nodejs
     pkgs.python3Packages.python-lsp-server
@@ -71,13 +71,34 @@ environment.systemPackages = [
   users.users.alcestide = {
     isNormalUser = true;
     description = "Angelo Panariti";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "vboxusers"];
     packages = with pkgs; [
     ];
   };
 
   security.polkit.enable = true;
-  #virtualisation.libvirtd.enable = true;
-  #programs.virt-manager.enable = true;
+virtualisation.virtualbox.host.enable = true;
+users.extraGroups.vboxusers.members = [ "alcestide" ];
+virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
+      ovmf = {
+        enable = true;
+        packages = [ (pkgs.OVMF.override {
+          secureBoot = true;
+          httpSupport = true;
+          tpmSupport = true;
+        }).fd ];
+      };
+    };
+  };
+environment.sessionVariables = {
+QT_STYLE_OVERRIDE = pkgs.catppuccin-qt5ct;
+};
+
+  programs.virt-manager.enable = true;
   system.stateVersion = "24.05"; 
 }

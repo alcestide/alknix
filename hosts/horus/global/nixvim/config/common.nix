@@ -55,12 +55,14 @@
         autochdir = true;
         close_on_exit = true;
         direction = "vertical";
+        size = 50;
       };
     };
 
     gitsigns = {
       enable = true;
       settings.current_line_blame = true;
+      settings.attach_to_untracked = false;
     };
 
     markdown-preview = {

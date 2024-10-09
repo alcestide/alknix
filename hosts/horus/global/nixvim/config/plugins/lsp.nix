@@ -2,7 +2,7 @@
   plugins.lsp = {
       enable = true;
       servers = {
-        #ts-ls.enable = true; # TS/JS
+        tsserver.enable = true; # TS/JS
         cssls.enable = true; # CSS
         tailwindcss.enable = true; # TailwindCSS
         html.enable = true; # HTML
