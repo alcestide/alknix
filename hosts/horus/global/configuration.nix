@@ -23,6 +23,11 @@ in
     { device = "/dev/disk/by-uuid/0889E01051FF80FB";
       fsType = "ntfs-3g"; 
       options = [ "rw" "uid=1000"];
+    }; 
+  fileSystems."/mnt/disk2" =
+    { device = "/dev/disk/by-uuid/7D7F42BD3E305E10";
+      fsType = "ntfs-3g"; 
+      options = [ "rw" "nofail" "uid=1000"];
     };
 
     time.timeZone = "Europe/Rome";
@@ -53,18 +58,36 @@ environment.systemPackages = [
     pkgs.gnome-themes-extra
     pkgs.libsForQt5.qtstyleplugin-kvantum
     pkgs.libsForQt5.qt5ct
-        pkgs.libsForQt5.qt5.qtgraphicaleffects
+    pkgs.libsForQt5.qt5.qtgraphicaleffects
     pkgs.nodePackages.dockerfile-language-server-nodejs
     pkgs.python3Packages.python-lsp-server
     pkgs.nodePackages.yaml-language-server
     pkgs.nodePackages.vim-language-server
+    
+    # Wine
+    # support both 32- and 64-bit applications
+    pkgs.wineWowPackages.stable
+    # support 32-bit only
+    pkgs.wine
+    # support 64-bit only
+    (pkgs.wine.override { wineBuild = "wine64"; })
+    # support 64-bit only
+    pkgs.wine64
+    # pkgs.wine-staging (version with experimental features)
+    pkgs.wineWowPackages.staging
+    # pkgs.winetricks (all versions)
+    pkgs.winetricks
+    # native wayland support (unstable)
+    pkgs.wineWowPackages.waylandFull
   ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.permittedInsecurePackages = ["electron-24.8.6"];
   nixpkgs.config.allowUnfree = true;
   nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 1d"; }; 
   security.rtkit.enable = true;
   hardware.pulseaudio.enable = false;
+  hardware.bluetooth.enable = true;
   users.defaultUserShell = pkgs.zsh;
   catppuccin.flavor = "mocha";
   catppuccin.enable = true;

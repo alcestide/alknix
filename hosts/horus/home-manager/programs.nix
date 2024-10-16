@@ -22,7 +22,6 @@
 			bind - split-window -v\n
 			bind -n M-Left select-pane -L\n
 			bind -n M-Right select-pane -R\n
-
 			bind -n M-Up select-pane -U\n
 			bind -n M-Down select-pane -D\n
 			set -g visual-activity off\n
@@ -37,7 +36,7 @@
 			set-option -ga terminal-overrides ',xterm-256color:Tc'\n
             set -g status-left-length 10\n
             set -g status-bg black\n
-            set -g status-fg white\n";
+            set -g status-fg white";
 	};
 
 	zsh = {
@@ -51,14 +50,23 @@
             vim = "nvim";
             nixvim = "nix run github:alcestide/nixvim --";
             ls = "exa";
-		    ll = "exa -l";
+            ll = "exa -l";
+            r = "ranger";
 		    rb = "sudo nixos-rebuild switch";
-            pptp-lecce = "sudo pon pptp-lecce debug dump logfd 2 nodetach";
+            pptp-lecce = "sudo pon pptp-lecce debug dump logfd 2 updetach";
 		  };
 		oh-my-zsh = {
 		  enable = true;
 		  plugins = [ ];
           theme = "agnoster";
+          /*
+        extraConfig = "
+        if [ "$TERM" = "xterm-256color" ]; then'\n'
+        ZSH_THEME="agnoster"'\n'
+          else'\n'
+        ZSH_THEME="robbyrussell"'\n'
+          fi'\n'
+        ""*/
         };
 
 		history = {

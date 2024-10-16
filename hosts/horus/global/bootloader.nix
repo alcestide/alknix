@@ -6,4 +6,5 @@
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.systemd-boot.consoleMode = "max"; 
   boot.loader.grub.font = 22;
+  boot.extraModprobeConfig = '' options bluetooth disable_ertm=1 '';
 }

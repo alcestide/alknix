@@ -32,20 +32,19 @@
         ppp
         jq     
         yq-go
+        python3
         nodejs
         rustup
         hugo
         go
         eza
         zoxide
-        #ranger
         grim
         slurp
         swappy
         xclip
         feh
         pywal        
-        #waybar
         wofi
         xwayland
         wl-clipboard
@@ -59,8 +58,6 @@
         coreutils-prefixed
         dunst
         libnotify
-        #hyprpaper
-        #hyprlock
         hyprshot 
         hyprcursor
         nwg-look
@@ -68,12 +65,14 @@
         ueberzugpp
 
         # Desktop Apps
-        #firefox
-        chromium
+        ark
         telegram-desktop
+        discord
         filezilla
         qbittorrent
         pavucontrol
+        pasystray
+        blueman
         gparted
         obsidian
         vscode
@@ -84,6 +83,7 @@
         zathura
         nicotine-plus
         picard
+        pcsx2
     
       ];
     }

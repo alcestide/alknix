@@ -14,8 +14,8 @@
     };
 
     cursorTheme = {
-      name = "Numix-Cursor";
-      package = pkgs.numix-cursor-theme;
+      name = "BreezeX-RoséPine";
+      package = pkgs.rose-pine-cursor;
     };
 
     gtk3.extraConfig = {
