@@ -14,6 +14,7 @@
       username = "alcestide";
       homeDirectory = "/home/alcestide";
       sessionVariables = { 
+      VISUAL="nvim";
       HYPRSHOT_DIR="/home/alcestide/Pictures/Screenshots";
       };
     };

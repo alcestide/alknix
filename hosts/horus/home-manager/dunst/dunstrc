@@ -80,3 +80,7 @@
     frame_color = "#ff0000"
     timeout = 0
     override_pause_level = 60
+
+[skip-rule] 
+    appname=blueman-manager
+    skip_display=true
