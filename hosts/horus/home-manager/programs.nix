@@ -1,7 +1,7 @@
 {pkgs,inputs, ... }:
 
 {
-  programs = {
+ programs = {
 
       git = {
 	    enable = true;
@@ -53,7 +53,7 @@
             ll = "exa -l";
             r = "ranger";
 		    rb = "sudo nixos-rebuild switch";
-            pptp-lecce = "sudo pon pptp-lecce debug dump logfd 2 updetach";
+            pptp-lecce = "pon pptp-lecce debug dump logfd 2 updetach && ip route add 172.16.10.0/24 dev ppp0";
 		  };
 		oh-my-zsh = {
 		  enable = true;
@@ -80,7 +80,8 @@
         catppuccin.enable = true;
 	    settings = {
 	    env.TERM = "xterm-256color";
-	      font = {
+        font = {
+                  size = 18;
 		normal = {
 		family = "Fira Code";
 	      };};
@@ -97,13 +98,16 @@
       firefox = {
         enable = true;
       };
+
+      emacs = {
+        enable = true;
+      };
       
       #waybar.enable = true;
       ranger = {
         enable = true;
         extraConfig = "set preview_images true\nset preview_images_method ueberzug";
       };
-
 
     };
     }

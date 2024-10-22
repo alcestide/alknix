@@ -11,8 +11,8 @@
     softtabstop = 0;
     expandtab = true;
     smarttab = true;
-    clipboard = "unnamedplus";
     cursorline = true;
+    clipboard="unnamedplus";
     #ruler = true;
     gdefault = true;
     scrolloff = 5;

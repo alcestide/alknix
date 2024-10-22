@@ -33,6 +33,7 @@
         jq     
         yq-go
         python3
+        glfw
         nodejs
         rustup
         hugo
@@ -63,7 +64,8 @@
         nwg-look
         swtpm
         ueberzugpp
-
+        ffmpegthumbnailer
+        w3m 
         # Desktop Apps
         ark
         telegram-desktop
@@ -83,6 +85,7 @@
         zathura
         nicotine-plus
         picard
+        duckstation
         pcsx2
     
       ];

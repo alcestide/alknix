@@ -23,20 +23,6 @@ virtualisation.oci-containers = {
           "/home/alcestide/.config/smokeping/data:/data"
         ];
 	};
-	picard = {
-		image = "mikenye/picard:latest";
-		ports = ["5800:5800"];
-		environment = {
-			PUID = "1001";
-			PGID = "1001";
-			TZ = "Europe/Rome";
-		};
-
-		volumes = [
-			"/home/alcestide/.config/picard:/config:rw"
-			"/mnt/disk1/Music:/storage:rw"
-			];
-		};
 	calibre-web = {
 		image = "lscr.io/linuxserver/calibre-web:latest";
 		environment = {
@@ -50,6 +36,42 @@ virtualisation.oci-containers = {
 			"/mnt/disk1/Books:/books"
 		];
 		};
+
+/**
+	ddns-updater = {
+	    image = "qmcgaw/ddns-updater";
+		ports = ["8000:8000"];
+		volumes = ["/home/alcestide/Documents/ddns-updater:/updater/data"];
+    environment = {
+      PERIOD="1m";
+      UPDATE_COOLDOWN_PERIOD="1m";
+	PUBLICIP_FETCHERS="all";
+      PUBLICIP_HTTP_PROVIDERS="all";
+      PUBLICIPV4_HTTP_PROVIDERS="all";
+      PUBLICIPV6_HTTP_PROVIDERS="all";
+      PUBLICIP_DNS_PROVIDERS="all";
+      PUBLICIP_DNS_TIMEOUT="3s";
+      HTTP_TIMEOUT="10s";
+      LISTENING_ADDRESS=":8000";
+      ROOT_URL="/";
+      LOG_LEVEL="info";
+      LOG_CALLER="hidden";
+      SHOUTRRR_ADDRESSES="";
+	};
+	autoStart = true;
+};
+**/
+
+	cloudflare-ddns = {
+		image = "oznu/cloudflare-ddns:latest";
+		autoStart = true;
+		environment = {
+			API_KEY="placeholder";
+			ZONE="alcestide.com";
+			SUBDOMAIN="*";
+			PROXIED="false";
+		};
+	};
 };
 };
 }

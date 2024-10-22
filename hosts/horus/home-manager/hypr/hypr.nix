@@ -19,7 +19,7 @@
     programs.hyprlock = {
       enable = true;
       extraConfig = ''
-      ${builtins.readFile ./hyprland.conf}
+      ${builtins.readFile ./hyprlock.conf}
       '';
     };
 

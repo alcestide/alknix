@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{pkgs, config, lib, ... }:
 
 {
   imports =
@@ -30,7 +30,7 @@
   environment.systemPackages = with pkgs; [
      vim 
      wget
-     beets
+     wireguard-tools
      smartmontools
   ];
 
@@ -40,6 +40,7 @@
 					
   nix.settings.experimental-features = ["nix-command" "flakes"];
   #nixpkgs.config.allowUnfree = true;
+  systemd.services.navidrome.serviceConfig.ProtectHome = lib.mkForce false;
 	
   system.stateVersion = "24.05"; # Did you read the comment?
 }

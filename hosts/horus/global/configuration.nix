@@ -8,7 +8,15 @@ alknixvim = nixvim.legacyPackages.x86_64-linux.makeNixvimWithModule {
 	inherit pkgs;
 	module = nixvim-config;};
 in
-
+/**
+  pkgs.mkShell {
+    packages = with pkgs; [
+      glfw
+      glew
+      libGL
+    ];
+  }
+**/
 {
   imports =
     [ 
@@ -52,8 +60,10 @@ environment.systemPackages = [
 	pkgs.ntfs3g
   	pkgs.vim
     pkgs.mpv
+    pkgs.ffmpeg
     pkgs.rclone
-   	pkgs.waybar
+    pkgs.waybar
+    pkgs.wl-clipboard
     pkgs.networkmanagerapplet
     pkgs.gnome-themes-extra
     pkgs.libsForQt5.qtstyleplugin-kvantum
@@ -81,11 +91,14 @@ environment.systemPackages = [
     pkgs.wineWowPackages.waylandFull
   ];
 
+
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.permittedInsecurePackages = ["electron-24.8.6"];
   nixpkgs.config.allowUnfree = true;
   nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 1d"; }; 
   security.rtkit.enable = true;
+  hardware.opengl.enable=true;
   hardware.pulseaudio.enable = false;
   hardware.bluetooth.enable = true;
   users.defaultUserShell = pkgs.zsh;

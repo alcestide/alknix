@@ -5,15 +5,15 @@
       enable = true;
     };
 
-    bufferline = {
-      enable = true;
-    };
-
     lualine = {
       enable = true;
     };
 
     neoscroll = {
+      enable = true;
+    };
+
+    oil = {
       enable = true;
     };
 
@@ -71,7 +71,7 @@
     };
 
     noice = {
-      enable = true;
+      enable = false;
     };
 
 
@@ -103,8 +103,5 @@
     };
 
   };
-
-
-
 }
 
