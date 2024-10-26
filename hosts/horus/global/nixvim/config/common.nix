@@ -9,6 +9,14 @@
       enable = true;
     };
 
+    cmp_luasnip = {
+      enable = true;
+    };
+
+    luasnip = {
+      enable = true;
+    };
+
     neoscroll = {
       enable = true;
     };
@@ -37,27 +45,11 @@
       enable = true;
     };
 
-    notify = {
+    telescope = {
       enable = true;
-      backgroundColour = "#1e1e2e";
-      fps = 144;
-      render = "default";
-      timeout = 10;
-      topDown = true;
     };
 
     persistence.enable = true;
-
-    toggleterm = {
-      enable = true;
-      settings = {
-        hide_numbers = false;
-        autochdir = true;
-        close_on_exit = true;
-        direction = "vertical";
-        size = 50;
-      };
-    };
 
     gitsigns = {
       enable = true;
@@ -65,19 +57,14 @@
       settings.attach_to_untracked = false;
     };
 
-    markdown-preview = {
+    neogit = {
       enable = true;
-      settings.theme = "dark";
     };
-
-    noice = {
-      enable = false;
-    };
-
 
     which-key = {
       enable = true;
     };
+
     undotree = {
       enable = true;
       settings = {

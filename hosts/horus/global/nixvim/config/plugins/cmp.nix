@@ -1,6 +1,6 @@
 {
   plugins.cmp = {
-      enable = true;
+    enable = true;
       settings = {
         autoEnableSources = true;
         experimental = { ghost_text = true; };
@@ -9,11 +9,14 @@
           fetchingTimeout = 200;
           maxViewEntries = 30;
         };
-        snippet = { expand = "luasnip"; };
+        snippet.expand = ''
+          function(args)
+            require('luasnip').lsp_expand(args.body)
+          end
+        '';
         formatting = { fields = [ "kind" "abbr" "menu" ]; };
         sources = [
           { name = "nvim_lsp"; }
-          { name = "emoji"; }
           {
             name = "buffer"; # text within current buffer
             option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
@@ -34,7 +37,7 @@
           completion = { border = "solid"; };
           documentation = { border = "solid"; };
         };
-
+        
         mapping = {
           "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
           "<C-j>" = "cmp.mapping.select_next_item()";

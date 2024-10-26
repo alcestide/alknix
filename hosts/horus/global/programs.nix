@@ -2,6 +2,11 @@
 {
   
   programs = { 
+    gnupg.agent = {
+      enable = true;
+      pinentryPackage = pkgs.pinentry-curses;
+      enableSSHSupport = true;
+    };
     zsh.enable = true;
 
     #hyprland = enable = true;
@@ -14,7 +19,12 @@
       thunar-volman
       thunar-archive-plugin
       thunar-media-tags-plugin
-  ];
+    ];
+
+  direnv = {
+  enable = true;
+  nix-direnv.enable = true;
+};
   
     steam = {
       enable = true;

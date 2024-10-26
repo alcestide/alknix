@@ -4,6 +4,7 @@
 	nixos-generators
         nix-search-cli
         nix-output-monitor
+        nix-init
         xfce.xfconf
         lxde.lxsession
         zsh
@@ -15,6 +16,8 @@
         ripgrep
         psmisc 
         fzf    
+        gnupg
+        pinentry
         mtr    
         iperf
         dnsutils      
@@ -27,13 +30,17 @@
         ethtool
         pciutils 
         usbutils
+        qrencode
         pptp
         pptpd
         ppp
         jq     
         yq-go
+        gh
         python3
         glfw
+        cmake
+        gnumake
         nodejs
         rustup
         hugo
@@ -48,7 +55,9 @@
         pywal        
         wofi
         xwayland
+        wayland-scanner
         wl-clipboard
+        clipman
         wlsunset
         wdisplays
         wireguard-tools
@@ -66,11 +75,15 @@
         ueberzugpp
         ffmpegthumbnailer
         w3m 
+        yazi
+
         # Desktop Apps
         ark
         telegram-desktop
+        chromium
         discord
         filezilla
+        remmina
         qbittorrent
         pavucontrol
         pasystray
@@ -80,11 +93,13 @@
         vscode
         feishin
         gimp
+        krita
         inkscape
         font-manager
         zathura
         nicotine-plus
         picard
+        godot_4
         duckstation
         pcsx2
     

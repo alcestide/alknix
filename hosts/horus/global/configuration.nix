@@ -53,7 +53,7 @@ in
   };
 environment.shells = with pkgs; [ zsh ];
 environment.systemPackages = [
-    alknixvim
+  alknixvim
     pkgs.gcc
 	pkgs.git
     pkgs.htop
@@ -90,8 +90,6 @@ environment.systemPackages = [
     # native wayland support (unstable)
     pkgs.wineWowPackages.waylandFull
   ];
-
-
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.permittedInsecurePackages = ["electron-24.8.6"];

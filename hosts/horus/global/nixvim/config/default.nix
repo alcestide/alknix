@@ -6,6 +6,7 @@
 		./keymaps.nix
         ./plugins/lsp.nix
         ./plugins/cmp.nix
+        ./plugins/neotree.nix
 ];
 
 }

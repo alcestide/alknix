@@ -52,8 +52,9 @@
             ls = "exa";
             ll = "exa -l";
             r = "ranger";
+            y = "yazi";
 		    rb = "sudo nixos-rebuild switch";
-            pptp-lecce = "pon pptp-lecce debug dump logfd 2 updetach && ip route add 172.16.10.0/24 dev ppp0";
+            pptp-lecce = "pon pptp-lecce debug dump logfd 2 updetach && sudo ip route add 172.16.10.0/24 dev ppp0";
 		  };
 		oh-my-zsh = {
 		  enable = true;
@@ -81,7 +82,7 @@
 	    settings = {
 	    env.TERM = "xterm-256color";
         font = {
-                  size = 18;
+                  size = 16;
 		normal = {
 		family = "Fira Code";
 	      };};

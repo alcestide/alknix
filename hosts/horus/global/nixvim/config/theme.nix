@@ -8,10 +8,7 @@
       transparent_background = true;
       integrations = {
         cmp = true;
-        noice = true;
-        notify = true;
         neotree = true;
-        harpoon = true;
         gitsigns = true;
         which_key = true;
         illuminate.enabled = true;

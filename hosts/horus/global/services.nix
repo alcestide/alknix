@@ -8,6 +8,7 @@
     displayManager.sddm.catppuccin.assertQt6Sddm = false;
     displayManager.defaultSession = "hyprland";
     xserver.desktopManager.kodi.enable = true;
+    pcscd.enable = true;
     openssh.enable = true;
     printing.enable = true;
     pipewire = {

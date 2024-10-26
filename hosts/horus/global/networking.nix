@@ -12,10 +12,11 @@
               } ];
   networking.defaultGateway = "192.168.1.1";
   networking.nameservers = ["192.168.1.11"];
-  networking.firewall.enable = true;
+  networking.firewall.enable = false;
    networking.firewall.checkReversePath = "loose";
-   networking.firewall.allowedTCPPorts = [ 22 47 53 80 1723 5201 8384 8096 32400 51820 ];
+   networking.firewall.allowedTCPPorts = [ 22 47 53 80 1723 5201 8384 8096 32400];
    networking.firewall.allowedUDPPorts = [ 47 1723 53 51820 ];
+   /*
 
   networking.nat.enable = true;
   networking.nat.externalInterface = "enp6s0";
@@ -23,24 +24,34 @@
   networking.wireguard.enable = true;
   networking.wireguard.interfaces."wg0" = {
     postSetup = ''
-    ${pkgs.iptables}/bin/iptables -I FORWARD -i enp6s0 -j ACCEPT 
-    ${pkgs.iptables}/bin/iptables -I FORWARD -o wg0 -j ACCEPT 
-    ${pkgs.iptables}/bin/iptables -t nat -I POSTROUTING -o enp6s0 -j MASQUERADE
+    ${pkgs.iptables}/bin/iptables -I INPUT -p udp --dport 51820 -j ACCEPT
+    ${pkgs.iptables}/bin/iptables -I FORWARD -i eth0 -o wg0 -j ACCEPT
+    ${pkgs.iptables}/bin/iptables -I FORWARD -i wg0 -j ACCEPT
+    ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
      '';
-   postShutdown = ''
-   ${pkgs.iptables}/bin/iptables -D FORWARD -i enp6s0 -j ACCEPT
-   ${pkgs.iptables}/bin/iptables -D FORWARD -o wg0 -j ACCEPT
-   ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -o enp6s0 -j MASQUERADE
+     postShutdown = ''
+    ${pkgs.iptables}/bin/iptables -D INPUT -p udp --dport 51820 -j ACCEPT
+    ${pkgs.iptables}/bin/iptables -D FORWARD -i eth0 -o wg0 -j ACCEPT
+    ${pkgs.iptables}/bin/iptables -D FORWARD -i wg0 -j ACCEPT
+    ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
       '';
 
-     privateKeyFile = "/home/alcestide/wireguard-keys/privatekey";
+     privateKeyFile = "/home/alcestide/wireguard/clients/horus/privatekey";
      ips = [ "10.10.10.1/24"  ];
      listenPort = 51820;
      peers = [ 
-      { 
-        publicKey = "r6Pv5YmpTC8IRLFJYojWuD7r2upKd2QB6wvlyPj9IFI=";
+       { 
+        # Dummy
+        publicKey = "izsKipmN8tGckQsaj4DYrDADQ7U2P66mu3BUP+47/iY=";
         allowedIPs = [ "10.10.10.2/32"  ]; 
+      } 
+      {
+        # Phone
+        publicKey = "bJPRSK1wqf8TEOyXkgk3iTpvjg1RVG26aPAmWpA2GmE=";
+        allowedIPs = [ "10.10.10.3/32"];
       }
      ];
    };
+
+  */
 }

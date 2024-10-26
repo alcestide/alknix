@@ -1,6 +1,6 @@
 {
   plugins.lsp = {
-      enable = true;
+    enable = true;
       servers = {
         tsserver.enable = true; # TS/JS
         cssls.enable = true; # CSS
