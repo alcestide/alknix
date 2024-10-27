@@ -1,22 +1,14 @@
 { pkgs, host, username, lib, inputs, outputs, system, nixvim,... }:
 
 # Nixvim Configuration and Set-up
-
+/*
 let
 	nixvim-config = import ./nixvim/config;
 alknixvim = nixvim.legacyPackages.x86_64-linux.makeNixvimWithModule {
 	inherit pkgs;
 	module = nixvim-config;};
 in
-/**
-  pkgs.mkShell {
-    packages = with pkgs; [
-      glfw
-      glew
-      libGL
-    ];
-  }
-**/
+*/
 {
   imports =
     [ 
@@ -53,7 +45,8 @@ in
   };
 environment.shells = with pkgs; [ zsh ];
 environment.systemPackages = [
-  alknixvim
+  inputs.nixvim.packages."x86_64-linux".default
+  inputs.agenix.packages."x86_64-linux".default
     pkgs.gcc
 	pkgs.git
     pkgs.htop
@@ -129,6 +122,7 @@ virtualisation.libvirtd = {
       };
     };
   };
+
 environment.sessionVariables = {
 QT_STYLE_OVERRIDE = pkgs.catppuccin-qt5ct;
 };

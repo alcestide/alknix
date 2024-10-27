@@ -5,27 +5,26 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixvim = {
-      url = "github:nix-community/nixvim/update/nixos-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:alcestide/nixvim";
     };
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     flake-utils.url = "github:numtide/flake-utils";
     sops-nix.url = "github:Mic92/sops-nix";
+    agenix.url = "github:ryantm/agenix";
     catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = {
     self,nixpkgs,flake-utils,
-    home-manager,catppuccin,nixvim,
+    home-manager,catppuccin,agenix,nixvim,
     ...
   } @ inputs: let
     inherit (self) outputs;
     lib = nixpkgs.lib // home-manager.lib;
-
-    host = "osiris";
+    host = "horus";
     username = "alcestide";
-    systems = ["x86_64-linux"];
-    pkgsFor = lib.genAttrs systems (system:
+    system = ["x86_64-linux"];
+    pkgsFor = lib.genAttrs system (system:
       import nixpkgs {
         inherit system;
         inherit username;
@@ -33,12 +32,12 @@
       });
   in {
     inherit lib;
-    #overlays = import ./hosts/${host}/overlays {inherit inputs host;};
     nixosConfigurations = {
-      osiris = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs username host nixvim;};
+      "${host}" = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs system username host nixvim;};
         modules = [./global/configuration.nix 
-                    nixvim.nixosModules.nixvim
+                    #nixvim.nixosModules.nixvim
+                    agenix.nixosModules.default
                     catppuccin.nixosModules.catppuccin
                     home-manager.nixosModules.home-manager {
                 home-manager = { 
@@ -46,8 +45,7 @@
                     useUserPackages = true;
                     users.${username} = 
                     { imports = 
-                    [ 		
-			./home-manager/home.nix	
+                    [ ./home-manager/home.nix
                         catppuccin.homeManagerModules.catppuccin
 			
 			];};

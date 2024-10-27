@@ -10,8 +10,8 @@
     services.hyprpaper = {
       enable = true;
       settings = {
-        preload = ["/etc/nixos/hosts/horus/home-manager/hypr/assets/nix-catppuccin.png"];
-        wallpaper = ["DP-1,/etc/nixos/hosts/horus/home-manager/hypr/assets/nix-catppuccin.png"];
+        preload = ["/etc/nixos/home-manager/hypr/assets/nix-catppuccin.png"];
+        wallpaper = ["DP-1,/etc/nixos/home-manager/hypr/assets/nix-catppuccin.png"];
         splash = false;
     };
     };

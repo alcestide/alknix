@@ -5,6 +5,7 @@
         nix-search-cli
         nix-output-monitor
         nix-init
+        git-crypt
         xfce.xfconf
         lxde.lxsession
         zsh
