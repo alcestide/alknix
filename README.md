@@ -11,9 +11,11 @@
 # Structure
 ```markdown
 .
+.
 ├── horus
 │   ├── derivations
 │   │   └── sddm-theme.nix
+│   ├── flake.lock
 │   ├── flake.nix
 │   ├── global
 │   │   ├── bootloader.nix
@@ -45,17 +47,18 @@
 │   │   └── qt.nix
 │   └── LICENSE
 ├── LICENSE
-└── osiris
-    ├── flake.nix
-    ├── global
-    │   ├── configuration.nix
-    │   ├── hardware-configuration.nix
-    │   ├── networking.nix
-    │   ├── services.nix
-    │   └── virtualisation.nix
-    └── home-manager
-        ├── home.nix
-        └── packages.nix
+├── osiris
+│   ├── flake.nix
+│   ├── global
+│   │   ├── configuration.nix
+│   │   ├── hardware-configuration.nix
+│   │   ├── networking.nix
+│   │   ├── services.nix
+│   │   └── virtualisation.nix
+│   └── home-manager
+│       ├── home.nix
+│       └── packages.nix
+└── README.md
 ```
 
 | Type           | Program      |
