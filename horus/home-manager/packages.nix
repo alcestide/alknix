@@ -8,6 +8,9 @@
         git-crypt
         xfce.xfconf
         lxde.lxsession
+        gtkmm4
+        gtk-engine-murrine
+        pkg-config
         zsh
         oh-my-zsh
         zip
@@ -19,6 +22,7 @@
         fzf    
         gnupg
         pinentry
+        meson
         mtr    
         iperf
         dnsutils      
@@ -58,6 +62,7 @@
         xwayland
         wayland-scanner
         wl-clipboard
+        waybar
         clipman
         wlsunset
         wdisplays
@@ -75,8 +80,10 @@
         swtpm
         ueberzugpp
         ffmpegthumbnailer
+        mommy
         w3m 
         yazi
+        pulsemixer
 
         # Desktop Apps
         ark
@@ -86,6 +93,7 @@
         filezilla
         remmina
         qbittorrent
+        easyeffects
         pavucontrol
         pasystray
         blueman

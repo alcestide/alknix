@@ -15,7 +15,6 @@
       username = "alcestide";
       homeDirectory = "/home/alcestide";
       sessionVariables = { 
-      EDITOR="nvim";
       VISUAL="nvim";
       HYPRSHOT_DIR="$HOME/Pictures/Screenshots";
       HORUS="/etc/nixos/";

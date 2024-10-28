@@ -34,7 +34,7 @@
     jellyfin = {
       enable = true;
       openFirewall = true;
-    };
+      };
     plex = {
       enable = true;
       openFirewall = true;

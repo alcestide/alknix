@@ -23,11 +23,8 @@
       '';
     };
 
-
     xdg.configFile."waybar/config".source = ./waybar/config;
-    xdg.configFile."waybar/style.css".source = ./waybar/style.css;
-    programs.waybar = {
-      enable = true;
-    };
+    xdg.configFile."waybar/style.css".source = lib.mkDefault ./waybar/style.css;
+
 
   }

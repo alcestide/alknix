@@ -1,5 +1,6 @@
   {pkgs, ...}:
   {
+
   gtk = {
     enable = true;
 
@@ -9,8 +10,8 @@
     };
 
     theme = {
-      name = "palenight";
-      package = pkgs.palenight-theme;
+      name = "Tokyonight-Dark";
+      package = pkgs.tokyonight-gtk-theme;
     };
 
     cursorTheme = {
@@ -31,5 +32,5 @@
     };
   };
 
-  home.sessionVariables.GTK_THEME = "palenight";
+  home.sessionVariables.GTK_THEME = "Tokyonight-Dark";
   }

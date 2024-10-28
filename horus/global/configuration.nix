@@ -1,4 +1,4 @@
-{ pkgs, host, username, lib, inputs, outputs, system, nixvim,... }:
+{ pkgs, self, host, username, lib, inputs, outputs, system, nixvim,... }:
 
 # Nixvim Configuration and Set-up
 /*
@@ -43,10 +43,10 @@ in
     LC_TELEPHONE = "it_IT.UTF-8";
     LC_TIME = "it_IT.UTF-8";
   };
-environment.shells = with pkgs; [ zsh ];
+
 environment.systemPackages = [
   inputs.nixvim.packages."x86_64-linux".default
-  inputs.agenix.packages."x86_64-linux".default
+  self.inputs.nix-alien.packages."x86_64-linux".nix-alien
     pkgs.gcc
 	pkgs.git
     pkgs.htop
@@ -89,12 +89,13 @@ environment.systemPackages = [
   nixpkgs.config.allowUnfree = true;
   nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 1d"; }; 
   security.rtkit.enable = true;
-  hardware.opengl.enable=true;
+  hardware.graphics.enable=true;
   hardware.pulseaudio.enable = false;
   hardware.bluetooth.enable = true;
   users.defaultUserShell = pkgs.zsh;
   catppuccin.flavor = "mocha";
   catppuccin.enable = true;
+  programs.dconf.enable = true;
   users.users.alcestide = {
     isNormalUser = true;
     description = "Angelo Panariti";
@@ -123,6 +124,8 @@ virtualisation.libvirtd = {
     };
   };
 
+system.autoUpgrade.enable  = true;
+system.autoUpgrade.allowReboot  = true;
 environment.sessionVariables = {
 QT_STYLE_OVERRIDE = pkgs.catppuccin-qt5ct;
 };

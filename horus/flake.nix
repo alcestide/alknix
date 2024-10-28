@@ -2,21 +2,20 @@
   description = "ALK's NixOS conf.";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixvim = {
-      url = "github:alcestide/nixvim";
-    };
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    nixvim.url = "github:alcestide/nixvim";
+    #nixvim.url = "/home/alcestide/Git/nixvim/";
+    nix-alien.url = "github:thiagokokada/nix-alien";
+    home-manager.url = "github:nix-community/home-manager";
     flake-utils.url = "github:numtide/flake-utils";
-    sops-nix.url = "github:Mic92/sops-nix";
-    agenix.url = "github:ryantm/agenix";
     catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = {
     self,nixpkgs,flake-utils,
-    home-manager,catppuccin,agenix,nixvim,
+    home-manager,catppuccin,nixvim,
+    nix-alien,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -34,10 +33,8 @@
     inherit lib;
     nixosConfigurations = {
       "${host}" = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs system username host nixvim;};
+        specialArgs = {inherit self inputs outputs system username host nixvim;};
         modules = [./global/configuration.nix 
-                    #nixvim.nixosModules.nixvim
-                    agenix.nixosModules.default
                     catppuccin.nixosModules.catppuccin
                     home-manager.nixosModules.home-manager {
                 home-manager = { 

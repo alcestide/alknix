@@ -60,14 +60,7 @@
 		  enable = true;
 		  plugins = [ ];
           theme = "agnoster";
-          /*
-        extraConfig = "
-        if [ "$TERM" = "xterm-256color" ]; then'\n'
-        ZSH_THEME="agnoster"'\n'
-          else'\n'
-        ZSH_THEME="robbyrussell"'\n'
-          fi'\n'
-        ""*/
+          #extraConfig = 
         };
 
 		history = {
@@ -86,7 +79,7 @@
 		normal = {
 		family = "Fira Code";
 	      };};
-	      shell = {
+	      terminal.shell = {
 		program = "zsh";
 		};
 	     # import = ["/etc/nixos/home-manager/catppuccin-mocha.toml"];

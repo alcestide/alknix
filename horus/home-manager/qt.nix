@@ -3,10 +3,10 @@
 {
   qt = {
         enable = true;
-        platformTheme.name = "gtk";
+        platformTheme.name = "kvantum";
         style = {
-          name = "gtk2";
-          package = pkgs.libsForQt5.breeze-qt5;
+          name = "kvantum";
+          package = pkgs.catppuccin-qt5ct;
         };
       };
     }
