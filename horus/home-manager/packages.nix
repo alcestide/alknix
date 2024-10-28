@@ -5,10 +5,7 @@
         nix-search-cli
         nix-output-monitor
         nix-init
-        git-crypt
-        xfce.xfconf
         lxde.lxsession
-        gtkmm4
         gtk-engine-murrine
         pkg-config
         zsh
@@ -21,8 +18,6 @@
         psmisc 
         fzf    
         gnupg
-        pinentry
-        meson
         mtr    
         iperf
         dnsutils      
@@ -31,7 +26,8 @@
         tree
         lsof
         sysstat
-        lm_sensors 
+        lm_sensors
+        ncdu
         ethtool
         pciutils 
         usbutils
@@ -42,9 +38,9 @@
         jq     
         yq-go
         gh
+        calc
         python3
         glfw
-        cmake
         gnumake
         nodejs
         rustup
@@ -80,7 +76,6 @@
         swtpm
         ueberzugpp
         ffmpegthumbnailer
-        mommy
         w3m 
         yazi
         pulsemixer
@@ -88,28 +83,30 @@
         # Desktop Apps
         ark
         telegram-desktop
-        chromium
-        discord
+        #chromium
+        #discord
         filezilla
         remmina
         qbittorrent
-        easyeffects
+        #easyeffects
         pavucontrol
         pasystray
         blueman
-        gparted
+        #gparted
         obsidian
-        vscode
+        #vscode
         feishin
         gimp
-        krita
-        inkscape
+        #krita
+        #inkscape
+        #libreoffice
         font-manager
         zathura
         nicotine-plus
         picard
-        godot_4
+        #godot_4
         duckstation
+        #lutris
         pcsx2
     
       ];

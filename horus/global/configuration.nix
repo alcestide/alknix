@@ -47,7 +47,9 @@ in
 environment.systemPackages = [
   inputs.nixvim.packages."x86_64-linux".default
   self.inputs.nix-alien.packages."x86_64-linux".nix-alien
-    pkgs.gcc
+  pkgs.gcc
+  pkgs.man-pages
+  pkgs.glibc
 	pkgs.git
     pkgs.htop
 	pkgs.ntfs3g
