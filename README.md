@@ -67,5 +67,5 @@
 | Shell          | [Zsh](https://ohmyz.sh/) |
 | Terminal       | [Alacritty](https://alacritty.org/) |
 | Window Manager | [Hyprland](https://hyprland.org/) |
-| GTK Theme      |  Pale Night |
+| GTK Theme      | [Tokyonight-Dark](https://github.com/Fausto-Korpsvart/Tokyonight-GTK-Theme) |
 | GTK Icon Theme | [Rose-pine](https://github.com/rose-pine/gtk) |
