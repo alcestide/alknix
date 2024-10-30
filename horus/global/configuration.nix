@@ -110,7 +110,7 @@ environment.systemPackages = [
     ];
   };
 
-#security.polkit.enable = true;
+security.polkit.enable = true;
 virtualisation.virtualbox.host.enable = true;
 users.extraGroups.vboxusers.members = [ "alcestide" ];
 virtualisation.libvirtd = {

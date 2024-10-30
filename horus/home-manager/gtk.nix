@@ -4,18 +4,18 @@
   gtk = {
     enable = true;
 
-    iconTheme = {
+iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
 
     theme = {
-      name = "Tokyonight-Dark";
+      name = "Tokyonight-Dark-B";
       package = pkgs.tokyonight-gtk-theme;
     };
 
     cursorTheme = {
-      name = "BreezeX-RoséPine";
+      name = "BreezeX-RosePine-Linux";
       package = pkgs.rose-pine-cursor;
     };
 
@@ -32,5 +32,5 @@
     };
   };
 
-  home.sessionVariables.GTK_THEME = "Tokyonight-Dark";
+  home.sessionVariables.GTK_THEME = "Tokyonight-Dark-B";
   }

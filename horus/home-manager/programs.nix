@@ -79,7 +79,7 @@
 		normal = {
 		family = "Fira Code";
 	      };};
-	      terminal.shell = {
+	      shell = {
 		program = "zsh";
 		};
 	     # import = ["/etc/nixos/home-manager/catppuccin-mocha.toml"];
