@@ -18,17 +18,21 @@ in
         ./services.nix
         ./fonts.nix
         ./hardware-configuration.nix
-    ];
+      ];
+
+/*
   fileSystems."/mnt/disk1" =
-    { device = "/dev/disk/by-uuid/0889E01051FF80FB";
-      fsType = "ntfs-3g"; 
-      options = [ "rw" "uid=1000"];
-    }; 
+    { device = "/dev/disk/by-uuid/fd61bb35-c157-468d-9582-1d017c7aa148";
+      fsType = "ext4"; 
+      options = [ "nofail"];
+    };
+
   fileSystems."/mnt/disk2" =
     { device = "/dev/disk/by-uuid/7D7F42BD3E305E10";
       fsType = "ntfs-3g"; 
-      options = [ "rw" "nofail" "uid=1000"];
+      options = [ "rw" "nofail" "uid=1000" "nofail"];
     };
+    */
 
     time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -48,6 +52,7 @@ environment.systemPackages = [
   inputs.nixvim.packages."x86_64-linux".default
   self.inputs.nix-alien.packages."x86_64-linux".nix-alien
   pkgs.gcc
+  pkgs.gparted
   pkgs.man-pages
   pkgs.glibc
 	pkgs.git
@@ -91,6 +96,8 @@ environment.systemPackages = [
   nixpkgs.config.allowUnfree = true;
   nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 1d"; }; 
   security.rtkit.enable = true;
+  hardware.xone.enable = true;
+  hardware.xpadneo.enable = true;
   hardware.graphics.enable=true;
   hardware.pulseaudio.enable = false;
   hardware.bluetooth.enable = true;
@@ -106,7 +113,7 @@ environment.systemPackages = [
     ];
   };
 
-  security.polkit.enable = true;
+#security.polkit.enable = true;
 virtualisation.virtualbox.host.enable = true;
 users.extraGroups.vboxusers.members = [ "alcestide" ];
 virtualisation.libvirtd = {

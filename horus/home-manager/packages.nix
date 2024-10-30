@@ -79,6 +79,7 @@
         w3m 
         yazi
         pulsemixer
+        xboxdrv
 
         # Desktop Apps
         ark
@@ -88,6 +89,7 @@
         filezilla
         remmina
         qbittorrent
+        lutris
         #easyeffects
         pavucontrol
         pasystray
@@ -102,12 +104,14 @@
         #libreoffice
         font-manager
         zathura
+        foliate
         nicotine-plus
         picard
         #godot_4
         duckstation
         #lutris
         pcsx2
+        rpcs3
     
       ];
     }
