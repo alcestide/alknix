@@ -20,11 +20,10 @@ in
         ./hardware-configuration.nix
       ];
 
-/*
-  fileSystems."/mnt/disk1" =
-    { device = "/dev/disk/by-uuid/fd61bb35-c157-468d-9582-1d017c7aa148";
+  fileSystems."/mnt/disk3" =
+    { device = "/dev/disk/by-uuid/a60c5ccc-53a4-4e63-9768-2f6a211b283";
       fsType = "ext4"; 
-      options = [ "nofail"];
+      options = [ "rw" "nofail" "uid=1000" "nofail"];
     };
 
   fileSystems."/mnt/disk2" =
@@ -32,7 +31,6 @@ in
       fsType = "ntfs-3g"; 
       options = [ "rw" "nofail" "uid=1000" "nofail"];
     };
-    */
 
     time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -98,7 +96,6 @@ environment.systemPackages = [
   security.rtkit.enable = true;
   hardware.xone.enable = true;
   hardware.xpadneo.enable = true;
-  hardware.graphics.enable=true;
   hardware.pulseaudio.enable = false;
   hardware.bluetooth.enable = true;
   users.defaultUserShell = pkgs.zsh;

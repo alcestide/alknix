@@ -2,12 +2,12 @@
   description = "ALK's NixOS conf.";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixvim.url = "github:alcestide/nixvim";
     #nixvim.url = "/home/alcestide/Git/nixvim/";
     nix-alien.url = "github:thiagokokada/nix-alien";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
     flake-utils.url = "github:numtide/flake-utils";
     catppuccin.url = "github:catppuccin/nix";
   };
