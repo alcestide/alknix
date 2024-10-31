@@ -1,4 +1,4 @@
-{pkgs, lib, username,...}:
+{pkgs, lib, config, username,...}:
 {
   
   services = {
@@ -18,6 +18,11 @@
       pulse.enable = true;
     };
 
+    samba = {
+  enable = true;
+  securityType = "user";
+  openFirewall = true;
+};
     gvfs.enable = true;
     navidrome = {
       enable = false;
@@ -44,5 +49,13 @@ udev = {
       SUBSYSTEM=="usbmon", GROUP="wireshark", MODE="0640"
     '';
   };
+
+nextcloud = {
+  enable = true;
+  package = pkgs.nextcloud30;
+  hostName = "localhost";
+  config.adminpassFile = config.age.secrets.nextcloud.path;
+};
+
   };
 }

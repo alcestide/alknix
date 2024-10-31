@@ -21,7 +21,11 @@ in
         ./hardware-configuration.nix
       ];
 
-
+age.secrets.nextcloud = {
+  file = ../secrets/nextcloud.age;
+  owner = "nextcloud";
+  group = "nextcloud";
+};
 
     time.timeZone = "Europe/Rome";
     i18n.defaultLocale = "en_US.UTF-8";
@@ -39,6 +43,7 @@ in
 
 environment.systemPackages = [
   inputs.nixvim.packages."x86_64-linux".default
+  inputs.agenix.packages.x86_64-linux.default
   self.inputs.nix-alien.packages."x86_64-linux".nix-alien
   pkgs.gcc
   pkgs.gparted
@@ -134,7 +139,8 @@ virtualisation.libvirtd = {
 system.autoUpgrade.enable  = true;
 system.autoUpgrade.allowReboot  = true;
 environment.sessionVariables = {
-QT_STYLE_OVERRIDE = pkgs.catppuccin-qt5ct;
+EDITOR = "neovim";
+QT_STYLE_OVERRIDE = pkgs.dracula-theme;
 };
 
   programs.virt-manager.enable = true;

@@ -77,12 +77,12 @@
         ueberzugpp
         ffmpegthumbnailer
         w3m 
-        yazi
         pulsemixer
         xboxdrv
 
         # Desktop Apps
         ark
+        hakuneko
         telegram-desktop
         #chromium
         #discord

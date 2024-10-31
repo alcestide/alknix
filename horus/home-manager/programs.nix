@@ -1,4 +1,4 @@
-{pkgs,inputs, ... }:
+{pkgs,lib, inputs, ... }:
 
 {
  programs = {
@@ -101,6 +101,22 @@
       ranger = {
         enable = true;
         extraConfig = "set preview_images true\nset preview_images_method ueberzug";
+      };
+
+      yazi = {
+        enable = true;
+        settings = {
+          log = {
+            enabled = false;
+          };
+          manager = {
+            show_hidden = false;
+            sort_by = "modified";
+            sort_dir_first = true;
+            sort_reverse = true;
+          };
+        };
+
       };
 
     };
