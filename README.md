@@ -4,7 +4,7 @@
 [![Written in Nix](https://img.shields.io/badge/code-nix-blue)](https://nixos.org/)
 [![NixOS Unstable](https://img.shields.io/badge/NixOS-24.05-blue.svg?style=flat-square&logo=NixOS&logoColor=white)](https://nixos.org)
 [![GitHub last commit](https://img.shields.io/github/last-commit/alcestide/nixos)](#)
-[![Free](https://img.shields.io/badge/free_for_non_commercial_use-brightgreen)](#-license)
+[![Free](https://img.shields.io/badge/free_as-in_beer-green)](#-license)
 ---
 ![Screenshot_20241027-151705](https://github.com/user-attachments/assets/a46fb958-461d-4bc5-a15d-0377ce170ff1)
 
