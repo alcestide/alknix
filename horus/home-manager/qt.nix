@@ -3,10 +3,22 @@
 {
   qt = {
         enable = true;
-        platformTheme.name = "kvantum";
+        platformTheme.name = "qtct";
         style = {
           name = "kvantum";
-          package = pkgs.catppuccin-qt5ct;
+          package = pkgs.dracula-theme;
         };
       };
+
+      xdg.configFile = {
+  "Kvantum/kvantum.kvconfig".text = ''
+    [General]
+    theme=Dracula
+  '';
+
+  "Kvantum/Dracula".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula";
+};
+
     }
+
+

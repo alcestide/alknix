@@ -12,7 +12,8 @@ in
 {
   imports =
     [ 
-        ./bootloader.nix
+      ./bootloader.nix
+      ./disks.nix
         ./networking.nix
         ./programs.nix
         ./services.nix
@@ -20,21 +21,11 @@ in
         ./hardware-configuration.nix
       ];
 
-  fileSystems."/mnt/disk3" =
-    { device = "/dev/disk/by-uuid/a60c5ccc-53a4-4e63-9768-2f6a211b283";
-      fsType = "ext4"; 
-      options = [ "rw" "nofail" "uid=1000" "nofail"];
-    };
 
-  fileSystems."/mnt/disk2" =
-    { device = "/dev/disk/by-uuid/7D7F42BD3E305E10";
-      fsType = "ntfs-3g"; 
-      options = [ "rw" "nofail" "uid=1000" "nofail"];
-    };
 
     time.timeZone = "Europe/Rome";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
+    i18n.defaultLocale = "en_US.UTF-8";
+    i18n.extraLocaleSettings = {
     LC_ADDRESS = "it_IT.UTF-8";
     LC_IDENTIFICATION = "it_IT.UTF-8";
     LC_MEASUREMENT = "it_IT.UTF-8";
@@ -87,6 +78,9 @@ environment.systemPackages = [
     pkgs.winetricks
     # native wayland support (unstable)
     pkgs.wineWowPackages.waylandFull
+
+    pkgs.protontricks
+    pkgs.protonup-qt
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -94,6 +88,13 @@ environment.systemPackages = [
   nixpkgs.config.allowUnfree = true;
   nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 1d"; }; 
   security.rtkit.enable = true;
+
+hardware.opengl = {
+  enable = true;
+  driSupport = true;
+  driSupport32Bit = true;
+};
+
   hardware.xone.enable = true;
   hardware.xpadneo.enable = true;
   hardware.pulseaudio.enable = false;

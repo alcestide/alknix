@@ -81,7 +81,7 @@
     "on-click-right" : "pavucontrol"
     },
     "memory": {
-    "format": "<span foreground='#9ece6a'></span> {}%",
+    "format": "<span foreground='#9ece6a'> </span> {}%",
     "on-click": "alacritty -e htop"
     },
     "tray": {

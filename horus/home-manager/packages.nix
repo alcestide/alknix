@@ -90,13 +90,10 @@
         remmina
         qbittorrent
         lutris
-        #easyeffects
         pavucontrol
         pasystray
         blueman
-        #gparted
         obsidian
-        #vscode
         feishin
         gimp
         #krita
@@ -104,7 +101,8 @@
         #libreoffice
         font-manager
         zathura
-        foliate
+        evince
+        yacreader
         nicotine-plus
         picard
         #godot_4
