@@ -1,13 +1,7 @@
-{pkgs, lib, config, username,...}:
+{username,...}:
 {
   
   services = {
-    displayManager.sddm.wayland.enable = true;
-    #displayManager.sddm.enable = true;
-    displayManager.sddm.theme = lib.mkForce "${import ../derivations/sddm-theme.nix { inherit pkgs; }}";
-    displayManager.sddm.catppuccin.assertQt6Sddm = false;
-    displayManager.defaultSession = "hyprland";
-    xserver.desktopManager.kodi.enable = true;
     pcscd.enable = true;
     openssh.enable = true;
     printing.enable = true;
@@ -18,11 +12,6 @@
       pulse.enable = true;
     };
 
-    samba = {
-  enable = true;
-  securityType = "user";
-  openFirewall = true;
-};
     gvfs.enable = true;
     navidrome = {
       enable = false;
@@ -40,22 +29,5 @@
       enable = true;
       openFirewall = true;
       };
-    plex = {
-      enable = true;
-      openFirewall = true;
-    };
-udev = {
-    extraRules = ''
-      SUBSYSTEM=="usbmon", GROUP="wireshark", MODE="0640"
-    '';
-  };
-
-nextcloud = {
-  enable = true;
-  package = pkgs.nextcloud30;
-  hostName = "localhost";
-  config.adminpassFile = config.age.secrets.nextcloud.path;
-};
-
   };
 }

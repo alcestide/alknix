@@ -2,15 +2,17 @@
 {
   
   programs = { 
+
+    zsh.enable = true;
+    virt-manager.enable = true;
+    dconf.enable = true;
     gnupg.agent = {
       enable = true;
       pinentryPackage = pkgs.pinentry-curses;
       enableSSHSupport = true;
     };
-    zsh.enable = true;
-    wireshark.enable = true;
-    wireshark.package = pkgs.wireshark;
 
+    wireshark.enable = true;
     thunar.enable = true;
       thunar.plugins = with pkgs.xfce; [
       thunar-volman
@@ -18,11 +20,11 @@
       thunar-media-tags-plugin
     ];
 
-  direnv = {
-  enable = true;
-  nix-direnv.enable = true;
-};
-  
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
     steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play

@@ -7,4 +7,5 @@ let
 in
 {
   "nextcloud.age".publicKeys = [ alcestide horus ];
+  "cloudflare_token.age".publicKeys = [ alcestide horus ];
 }

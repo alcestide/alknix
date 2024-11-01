@@ -1,4 +1,4 @@
-{pkgs,lib, inputs, ... }:
+{pkgs, ... }:
 
 {
  programs = {
@@ -66,7 +66,6 @@
 		history = {
 		size = 10000;
       };
-      #initExtra = "(cat ~/.cache/wal/sequences)\n";
       };
 
 	alacritty = {
@@ -82,7 +81,6 @@
 	      shell = {
 		program = "zsh";
 		};
-	     # import = ["/etc/nixos/home-manager/catppuccin-mocha.toml"];
   	      window.opacity = 0.7;
 	      scrolling.multiplier = 5;
 	      selection.save_to_clipboard = true;
@@ -91,16 +89,6 @@
 
       firefox = {
         enable = true;
-      };
-
-      emacs = {
-        enable = true;
-      };
-      
-      #waybar.enable = true;
-      ranger = {
-        enable = true;
-        extraConfig = "set preview_images true\nset preview_images_method ueberzug";
       };
 
       yazi = {

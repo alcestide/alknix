@@ -1,4 +1,4 @@
-{pkgs,inputs,...}:
+{pkgs,...}:
 
 { home.packages = with pkgs; [
 	nixos-generators
@@ -82,32 +82,23 @@
 
         # Desktop Apps
         ark
-        hakuneko
         telegram-desktop
-        #chromium
-        #discord
         filezilla
         remmina
         qbittorrent
-        lutris
         pavucontrol
         pasystray
         blueman
         obsidian
         feishin
         gimp
-        #krita
-        #inkscape
-        #libreoffice
         font-manager
         zathura
         evince
         yacreader
         nicotine-plus
         picard
-        #godot_4
         duckstation
-        #lutris
         pcsx2
         rpcs3
     

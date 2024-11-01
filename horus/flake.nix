@@ -23,33 +23,30 @@
     host = "horus";
     username = "alcestide";
     system = ["x86_64-linux"];
-    pkgsFor = lib.genAttrs system (system:
-      import nixpkgs {
-        inherit system;
-        inherit username;
-        inherit host;
-      });
   in {
     inherit lib;
     nixosConfigurations = {
-      "${host}" = nixpkgs.lib.nixosSystem {
+      "${host}" = 
+      nixpkgs.lib.nixosSystem {
         specialArgs = {inherit self inputs outputs system username host nixvim;};
-        modules = [./global/configuration.nix 
+        modules = [
+                    ./global/configuration.nix 
                     agenix.nixosModules.default
                     catppuccin.nixosModules.catppuccin
                     home-manager.nixosModules.home-manager {
-                home-manager = { 
-                    useGlobalPkgs = true;
-                    useUserPackages = true;
-                    users.${username} = 
-                    { imports = 
-                    [ ./home-manager/home.nix
-                        catppuccin.homeManagerModules.catppuccin
-			
-			];};
-                        };
-                }];
-            };
-        };
-        };
-    }
+                      home-manager = { 
+                      useGlobalPkgs = true;
+                      useUserPackages = true;
+                        users.${username} = 
+                        { imports = [ 
+                          ./home-manager/home.nix
+                          catppuccin.homeManagerModules.catppuccin
+                                    ];
+                          };
+                      };
+                      }
+                    ];
+                  };
+                };
+              };
+}

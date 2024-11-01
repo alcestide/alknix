@@ -1,4 +1,4 @@
-{pkgs,lib,host,...}:
+{host,...}:
 
 {
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
@@ -10,10 +10,10 @@
 		prefixLength = 24;
               } ];
   networking.defaultGateway = "192.168.1.1";
-  networking.nameservers = ["192.168.1.11"];
-  networking.firewall.enable = false;
-   networking.firewall.checkReversePath = "loose";
-   networking.firewall.allowedTCPPorts = [ 22 47 53 80 1723 5201 8384 8096 32400];
-   networking.firewall.allowedUDPPorts = [ 47 1723 53 51820 ];
+  networking.nameservers = ["192.168.1.1"];
+  networking.firewall.enable = true;
+  networking.firewall.checkReversePath = "loose";
+  networking.firewall.allowedTCPPorts = [ 22 47 53 80 8384 8096 ];
+  networking.firewall.allowedUDPPorts = [ 47 53 1723 5353 51820 ];
    
 }
