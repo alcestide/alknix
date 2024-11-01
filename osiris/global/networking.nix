@@ -35,12 +35,10 @@
      listenPort = 51820;
      peers = [ 
        { 
-        # 2/
         publicKey = "izsKipmN8tGckQsaj4DYrDADQ7U2P66mu3BUP+47/iY=";
         allowedIPs = [ "10.10.10.2/32"  ]; 
       } 
       {
-        # 3/
         publicKey = "bJPRSK1wqf8TEOyXkgk3iTpvjg1RVG26aPAmWpA2GmE=";
         allowedIPs = [ "10.10.10.3/32"];
       }

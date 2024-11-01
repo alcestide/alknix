@@ -1,4 +1,4 @@
-{pkgs, config, lib, ... }:
+{pkgs, inputs, config, lib, ... }:
 
 {
   imports =
@@ -27,52 +27,22 @@
      ];
    };
 
+age.secrets.cloudflare = {
+        file = ../secrets/cloudflare.age;
+        owner = "alcestide";
+        group = "users";
+        };
+
   environment.systemPackages = with pkgs; [
+     inputs.nixvim.packages."x86_64-linux".default
+     inputs.agenix.packages."x86_64-linux".default
      vim 
      wget
+     xclip
      wireguard-tools
      smartmontools
   ];
-systemd.timers."ddns" = {
-  wantedBy = [ "timers.target" ];
-	timerConfig = {
-		OnBootSec = "30m";
-		OnUnitActiveSec = "30m";
-		Unit = "ddns.service";
-	};
-};
 
-systemd.services."ddns" = {
-  script = ''	
-    set -eu
-    ${pkgs.curl}/bin/curl https://ipv64.net/update.php?key=TOKEN_PLACEHOLDER
-  '';
-  serviceConfig = {
-    Type = "oneshot";
-    User = "root";
-  };
-};
-
-systemd.services."wgresolvedns" = {
-  script = ''	
-    set -eu
-    ${pkgs.wireguard-tools}/bin/wg set wg0 peer bJPRSK1wqf8TEOyXkgk3iTpvjg1RVG26aPAmWpA2GmE= endpoint DOMAIN.PLACEHOLDER.com:51820
-  '';
-  serviceConfig = {
-    Type = "oneshot";
-    User = "root";
-  };
-};
-
-
-systemd.timers."wgresolvedns" = {
-  wantedBy = [ "timers.target" ];
-	timerConfig = {
-		OnBootSec = "30s";
-		OnUnitActiveSec = "30s";
-		Unit = "wgresolvedns.service";
-	};
-};
 
   environment.interactiveShellInit = ''
   	alias rb='sudo nixos-rebuild switch'

@@ -1,3 +1,5 @@
+{pkgs,config,...}:
+
 {
 virtualisation.oci-containers = {
     backend = "docker";
@@ -40,14 +42,16 @@ virtualisation.oci-containers = {
 	cloudflare-ddns = {
 		image = "oznu/cloudflare-ddns:latest";
 		autoStart = true;
+                volumes = ["/run/agenix/cloudflare:/API_KEY_FILE"];
 		environment = {
-			API_KEY="CLOUDFLARE_API_TOKEN";
-			ZONE="DOMAIN_PLACEHOLDER.com";
+			API_KEY_FILE="/API_KEY_FILE";
+			ZONE="alcestide.com";
 			SUBDOMAIN="*";
 			PROXIED="false";
 			CRON="* * * * *";
 		};
-	};
+      };
+
 };
 };
 }

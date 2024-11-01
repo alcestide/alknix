@@ -5,18 +5,18 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixvim = {
-      url = "github:nix-community/nixvim/update/nixos-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:/alcestide/nixvim";
     };
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     flake-utils.url = "github:numtide/flake-utils";
-    sops-nix.url = "github:Mic92/sops-nix";
+    agenix.url = "github:ryantm/agenix";
     catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = {
     self,nixpkgs,flake-utils,
-    home-manager,catppuccin,nixvim,
+    home-manager,catppuccin,
+    nixvim,agenix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -38,7 +38,7 @@
       osiris = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs username host nixvim;};
         modules = [./global/configuration.nix 
-                    nixvim.nixosModules.nixvim
+                    agenix.nixosModules.default
                     catppuccin.nixosModules.catppuccin
                     home-manager.nixosModules.home-manager {
                 home-manager = { 

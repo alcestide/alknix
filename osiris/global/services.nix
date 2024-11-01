@@ -6,7 +6,7 @@ services = {
   printing.enable = true;
   openssh.enable = true;
   adguardhome.enable = true;
-
+ 
   navidrome = {
 	enable = true;
 	settings = { MusicFolder ="/mnt/disk1/Music";
@@ -16,6 +16,7 @@ services = {
 	openFirewall = true;
 
 };
+
   syncthing = {
 	enable = true;
 	dataDir = "/home/alcestide/Documents";
