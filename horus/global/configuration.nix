@@ -1,4 +1,4 @@
-{ pkgs, self, inputs, ... }:
+{pkgs, config,self, inputs, ... }:
 
 {
   imports = [ 
@@ -30,9 +30,15 @@
     LC_TIME = "it_IT.UTF-8";
   };
 
+  powerManagement.enable = true;
   systemd.sleep.extraConfig = ''
-    HibernateDelaySec=30m
+    AllowHibernation=no
+    AllowHybridSleep=no
     SuspendState=mem
+  '';
+  services.logind.extraConfig = ''
+    IdleAction=suspend
+    IdelActionSec=1min
   '';
 
 environment.sessionVariables = {
@@ -49,8 +55,8 @@ environment.systemPackages = [
   pkgs.man-pages
   pkgs.glibc
   pkgs.git
-  pkgs.htop
   pkgs.ntfs3g
+  pkgs.xarchiver
   pkgs.vim
   pkgs.mpv
   pkgs.ffmpeg
@@ -106,6 +112,17 @@ environment.systemPackages = [
   hardware.xpadneo.enable = true;
   hardware.pulseaudio.enable = false;
   hardware.bluetooth.enable = true;
+
+  xdg.mime.enable = true;
+  xdg.mime.addedAssociations = {
+    "inode/directory" = ["thunar.desktop"];
+  };
+
+    xdg.portal = {
+      enable = true;
+      config = {common = {default="hyprland";};};
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-wlr pkgs.xdg-desktop-portal-hyprland ];
+    };
 
   users.defaultUserShell = pkgs.zsh;
   users.users.alcestide = {

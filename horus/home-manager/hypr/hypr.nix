@@ -1,5 +1,18 @@
 {lib,...}:
 {
+
+services.hypridle = {
+      enable = true;
+      settings = {
+        listener = [
+          {
+            timeout = 300;
+            on-timeout = "hyprlock";
+          }
+        ];
+      };
+    };
+
     wayland.windowManager.hyprland = {
       enable = true;
       extraConfig = ''

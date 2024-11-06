@@ -32,6 +32,7 @@
         pciutils 
         usbutils
         qrencode
+        stress-ng
         pptp
         pptpd
         ppp
@@ -80,27 +81,32 @@
         pulsemixer
         xboxdrv
 
-        # Desktop Apps
+        # [Desktop Apps]
         ark
-        telegram-desktop
-        filezilla
-        remmina
-        qbittorrent
         pavucontrol
         pasystray
         blueman
         obsidian
         feishin
+        telegram-desktop
+        filezilla
+        remmina
+        qbittorrent
         gimp
         font-manager
         zathura
         evince
-        yacreader
         nicotine-plus
         picard
+        lutris
         duckstation
         pcsx2
         rpcs3
+        davinci-resolve 
+        obs-studio
+        obs-studio-plugins.wlrobs
+        obs-studio-plugins.obs-pipewire-audio-capture
+        unigine-valley
     
       ];
     }

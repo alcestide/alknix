@@ -4,6 +4,7 @@
     ./dunst/dunst.nix
     ./gtk.nix
     ./qt.nix
+    ./htop.nix
     ./packages.nix
     ./programs.nix
     ./hypr/hypr.nix

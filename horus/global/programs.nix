@@ -1,8 +1,7 @@
-{pkgs, lib, ...}:
+{pkgs, ...}:
 {
   
   programs = { 
-
     zsh.enable = true;
     virt-manager.enable = true;
     dconf.enable = true;
