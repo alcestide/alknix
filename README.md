@@ -11,54 +11,60 @@
 # Structure
 ```markdown
 .
-.
-├── horus
-│   ├── derivations
-│   │   └── sddm-theme.nix
-│   ├── flake.lock
-│   ├── flake.nix
-│   ├── global
-│   │   ├── bootloader.nix
-│   │   ├── configuration.nix
-│   │   ├── fonts.nix
-│   │   ├── hardware-configuration.nix
-│   │   ├── networking.nix
-│   │   ├── programs.nix
-│   │   └── services.nix
-│   ├── home-manager
+├── derivations
+│   └── sddm-theme.nix
+├── flake.lock
+├── flake.nix
+├── global
+│   ├── age.nix
+│   ├── bootloader.nix
+│   ├── configuration.nix
+│   ├── disks.nix
+│   ├── fonts.nix
+│   ├── hardware-configuration.nix
+│   ├── networking.nix
+│   ├── programs.nix
+│   ├── services.nix
+│   └── virtualisation.nix
+├── home-manager
+│   ├── dunst
+│   │   ├── dunst.nix
+│   │   └── dunstrc
+│   ├── gtk.nix
+│   ├── home.nix
+│   ├── htop.nix
+│   ├── hypr
+│   │   ├── assets
+│   │   │   ├── dark-cat-rosewater.png
+│   │   │   └── nix-catppuccin.png
 │   │   ├── dunst
 │   │   │   ├── dunst.nix
 │   │   │   └── dunstrc
-│   │   ├── gtk.nix
-│   │   ├── home.nix
-│   │   ├── hypr
-│   │   │   ├── assets
-│   │   │   │   ├── dark-cat-rosewater.png
-│   │   │   │   └── nix-catppuccin.png
-│   │   │   ├── hyprland.conf
-│   │   │   ├── hyprlock.conf
-│   │   │   ├── hypr.nix
-│   │   │   ├── mocha.conf
-│   │   │   └── waybar
-│   │   │       ├── config
-│   │   │       └── style.css
-│   │   ├── packages.nix
-│   │   ├── programs.nix
-│   │   └── qt.nix
-│   └── LICENSE
+│   │   ├── hyprland.conf
+│   │   ├── hyprlock.conf
+│   │   ├── hypr.nix
+│   │   ├── mocha.conf
+│   │   └── waybar
+│   │       ├── config
+│   │       └── style.css
+│   ├── packages.nix
+│   ├── programs.nix
+│   ├── qt.nix
+│   ├── shell
+│   │   ├── htop.nix
+│   │   ├── terminals.nix
+│   │   ├── tmux.nix
+│   │   ├── yazi.nix
+│   │   └── zsh.nix
+│   └── themes
+│       ├── gtk.nix
+│       └── qt.nix
 ├── LICENSE
-├── osiris
-│   ├── flake.nix
-│   ├── global
-│   │   ├── configuration.nix
-│   │   ├── hardware-configuration.nix
-│   │   ├── networking.nix
-│   │   ├── services.nix
-│   │   └── virtualisation.nix
-│   └── home-manager
-│       ├── home.nix
-│       └── packages.nix
-└── README.md
+├── README.md
+└── secrets
+    ├── cloudflare_token.age
+    ├── nextcloud.age
+    └── secrets.nix
 ```
 
 | Type           | Program      |
