@@ -11,9 +11,9 @@
               } ];
   networking.defaultGateway = "192.168.1.1";
   networking.nameservers = ["192.168.1.1"];
-  networking.firewall.enable = true;
+  networking.firewall.enable = false;
   networking.firewall.checkReversePath = "loose";
-  networking.firewall.allowedTCPPorts = [ 22 47 53 80 8384 8096 ];
+  networking.firewall.allowedTCPPorts = [ 22 47 53 80 1723 8384 8096 ];
   networking.firewall.allowedUDPPorts = [ 47 53 1723 5353 51820 ];
    
 }

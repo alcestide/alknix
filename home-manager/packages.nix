@@ -15,28 +15,28 @@
         unzip
         p7zip
         ripgrep
-        psmisc 
-        fzf    
+        psmisc
+        fzf
         gnupg
-        mtr    
+        mtr
         iperf
-        dnsutils      
-        nmap    
-        ipcalc  
+        dnsutils
+        nmap
+        ipcalc
         tree
         lsof
         sysstat
         lm_sensors
         ncdu
         ethtool
-        pciutils 
+        pciutils
         usbutils
         qrencode
         stress-ng
         pptp
         pptpd
         ppp
-        jq     
+        jq
         yq-go
         gh
         calc
@@ -54,7 +54,7 @@
         swappy
         xclip
         feh
-        pywal        
+        pywal
         wofi
         xwayland
         wayland-scanner
@@ -71,17 +71,18 @@
         coreutils-prefixed
         dunst
         libnotify
-        hyprshot 
+        hyprshot
         hyprcursor
         nwg-look
         swtpm
         ueberzugpp
         ffmpegthumbnailer
-        w3m 
+        w3m
         pulsemixer
         xboxdrv
 
         # [Desktop Apps]
+        teams-for-linux
         ark
         pavucontrol
         pasystray
@@ -91,7 +92,7 @@
         telegram-desktop
         filezilla
         remmina
-        qbittorrent
+        transmission_4-gtk
         gimp
         font-manager
         zathura
@@ -102,11 +103,13 @@
         duckstation
         pcsx2
         rpcs3
-        davinci-resolve 
+        openmw
+        portmod
+        davinci-resolve
         obs-studio
         obs-studio-plugins.wlrobs
         obs-studio-plugins.obs-pipewire-audio-capture
         unigine-valley
-    
+
       ];
     }

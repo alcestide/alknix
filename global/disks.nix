@@ -1,7 +1,7 @@
 {
 
 fileSystems."/mnt/nvme" =
-{ device = "/dev/disk/by-uuid/ba49cc2f-5a7e-41b7-a1ef-c400967b976";
+{ device = "/dev/disk/by-uuid/ba49cc2f-5a7e-41b7-a1ef-c400967b9769";
   fsType = "ext4";
   options = ["nofail" "rw"];
   };

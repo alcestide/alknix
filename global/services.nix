@@ -1,6 +1,6 @@
 {username,...}:
 {
-  
+
   services = {
     pcscd.enable = true;
     openssh.enable = true;

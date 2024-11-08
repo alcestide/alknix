@@ -1,6 +1,5 @@
 {pkgs, ...}:
 {
-  
   programs = { 
     zsh.enable = true;
     virt-manager.enable = true;
@@ -11,6 +10,7 @@
       enableSSHSupport = true;
     };
 
+    nix-ld.enable = true;
     wireshark.enable = true;
     thunar.enable = true;
       thunar.plugins = with pkgs.xfce; [

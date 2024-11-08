@@ -1,19 +1,29 @@
+{lib,...}:
 {
 
   imports = [
-    ./dunst/dunst.nix
-    ./gtk.nix
-    ./qt.nix
-    ./htop.nix
-    ./packages.nix
-    ./programs.nix
-    ./hypr/hypr.nix
-    ];
 
+    ./programs.nix
+    ./packages.nix
+
+    ./themes/gtk.nix
+    ./themes/qt.nix
+
+    ./hypr/hypr.nix
+    ./hypr/dunst/dunst.nix
+
+
+    ./shell/zsh.nix
+    ./shell/htop.nix
+    ./shell/tmux.nix
+    ./shell/yazi.nix
+    ./shell/terminals.nix
+
+    ];
     home = {
       username = "alcestide";
       homeDirectory = "/home/alcestide";
-      sessionVariables = { 
+      sessionVariables = {
       VISUAL="nvim";
       HYPRSHOT_DIR="$HOME/Pictures/Screenshots";
       HORUS="/etc/nixos/";
@@ -21,7 +31,7 @@
       CODE="$HOME/Documents/Programming";
       };
     };
-
+nixpkgs.config.allowUnfree = true;
   home.stateVersion = "23.11";
   programs.home-manager.enable = true;
 

@@ -1,7 +1,7 @@
 {pkgs, config,self, inputs, ... }:
 
 {
-  imports = [ 
+  imports = [
         ./age.nix
         ./bootloader.nix
         ./disks.nix
@@ -60,6 +60,8 @@ environment.systemPackages = [
   pkgs.vim
   pkgs.mpv
   pkgs.ffmpeg
+  pkgs.ffmpegthumbnailer
+  pkgs.kdePackages.ffmpegthumbs
   pkgs.rclone
   pkgs.waybar
   pkgs.wl-clipboard
@@ -68,11 +70,22 @@ environment.systemPackages = [
   pkgs.libsForQt5.qtstyleplugin-kvantum
   pkgs.libsForQt5.qt5ct
   pkgs.libsForQt5.qt5.qtgraphicaleffects
+  pkgs.kdePackages.qtwayland
+  pkgs.kdePackages.qtwayland
+  pkgs.kdePackages.kdegraphics-thumbnailers
+  pkgs.libsForQt5.kdegraphics-thumbnailers
+  pkgs.kdePackages.kio-extras-kf5
+  pkgs.kdePackages.kio-extras
+  pkgs.kdePackages.kio-fuse
+  pkgs.dolphin
+  pkgs.libsForQt5.kimageformats
+  pkgs.kdePackages.qtimageformats
+  pkgs.kdePackages.qtimageformats
   pkgs.nodePackages.dockerfile-language-server-nodejs
   pkgs.python3Packages.python-lsp-server
   pkgs.nodePackages.yaml-language-server
   pkgs.nodePackages.vim-language-server
-    
+
   # Wine
   # support both 32- and 64-bit applications
   pkgs.wineWowPackages.stable
@@ -88,6 +101,7 @@ environment.systemPackages = [
   pkgs.winetricks
   # native wayland support (unstable)
   pkgs.wineWowPackages.waylandFull
+  pkgs.wine-staging
 
   # Proton Utils
   pkgs.protontricks
@@ -115,7 +129,7 @@ environment.systemPackages = [
 
   xdg.mime.enable = true;
   xdg.mime.addedAssociations = {
-    "inode/directory" = ["thunar.desktop"];
+    "inode/directory" = ["dolphin.desktop"];
   };
 
     xdg.portal = {
@@ -133,5 +147,5 @@ environment.systemPackages = [
     ];
   };
 
-  system.stateVersion = "24.05"; 
+  system.stateVersion = "24.05";
 }
