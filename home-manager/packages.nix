@@ -1,14 +1,8 @@
 {pkgs,config,lib,...}:
-/*
-let
-  newOpenMW = pkgs.openmw.overrideAttrs (old: {
-    postInstall = (old.postInstall or "") + ''
-      cp -r ./openmw/omwfx-shaders/* "$out/share/games/openmw/resources/"
-    '';
-  });
-  in
-*/
-  { home.packages = with pkgs; [
+
+  {
+  home.packages = with pkgs; [
+        OpenMW-Override
 	    nixos-generators
         nix-search-cli
         nix-output-monitor

@@ -12,7 +12,6 @@
     ./hypr/hypr.nix
     ./hypr/dunst/dunst.nix
 
-    ./openmw/default.nix
     ./shell/zsh.nix
     ./shell/htop.nix
     ./shell/tmux.nix
