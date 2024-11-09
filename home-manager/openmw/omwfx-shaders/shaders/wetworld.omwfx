@@ -1,0 +1,291 @@
+uniform_bool uDisplayRain {
+	header = "General";
+    default = true;
+    display_name = "Rain ON";
+	description = "Disable here to run SSR by its own";
+}
+
+uniform_bool uSSRActive {
+    default = true;
+    display_name = "Disable fog color fallback";
+	description = "To use SSR reflections instead of fog color";
+}
+
+uniform_float uPuddleTransparency {
+    step = 0.1;
+    min = 0.01;
+    max = 1.0;
+    default = 0.7;
+    display_name = "Puddles transparency";
+	description = "Control how muddy it is";
+}
+
+
+
+
+sampler_2d puddleTexture {
+    source = "shaders/textures/puddles.dds";
+    mag_filter = linear;
+    min_filter = linear;
+    wrap_s = repeat;
+    wrap_t = repeat;
+}
+
+sampler_2d rippleTexture {
+    source = "shaders/textures/ripples.dds";
+    mag_filter = linear;
+    min_filter = linear;
+    wrap_s = repeat;
+    wrap_t = repeat;
+}
+
+
+fragment wet {
+	
+	//#define DEBUG
+	#define ZESTERER
+	#define HORIZON 100000000
+	#define PI 3.14159265
+	
+	const float sky = 1e6;
+	
+	vec2 rcpres = omw.rcpResolution;
+
+    vec2 t = 2.0 * tan(radians(omw.fov * 0.5)) * vec2(1.0, rcpres.x / rcpres.y);
+
+
+	float saturate(float x) { return clamp(x, 0.0, 1.0);}
+	vec2 saturate(vec2 x) { return clamp(x, vec2(0.0), vec2(1.0));}
+	vec3 saturate(vec3 x) { return clamp(x, vec3(0.0), vec3(1.0));}
+	vec4 saturate(vec4 x) { return clamp(x, vec4(0.0), vec4(1.0));}
+	
+	float remap01(float minOutput, float maxOutput, float domain)
+	{
+		return minOutput * (1. - domain) + maxOutput * domain;
+	}
+	float weather_tone[10]=float[](
+		float(0.0),  //Clear
+		float(0.0), //Cloudy
+		float(0.0),  //Foggy
+		float(0.0),  //Overcast
+		float(1.0),  //Rain
+		float(1.0),  //Thunder
+		float(0.0),  //Ash
+		float(0.0),  //Blight
+		float(0.0),   //Snow
+		float(0.0)   //Blizzard
+	);
+
+    float RainAmount = mix(weather_tone[omw.weatherID], weather_tone[omw.nextWeatherID], omw.weatherTransition);
+	
+    vec3 wpos_at(vec2 uv) {
+        float depth = omw_GetDepth(uv);
+        #if (OMW_REVERSE_Z == 1)
+            float flipped_depth = 1.0 - depth;
+        #else
+            float flipped_depth = depth * 2.0 - 1.0;
+        #endif
+        vec4 clip_space = vec4(uv * 2.0 - 1.0, flipped_depth, 1.0);
+        if (depth == 1) {
+            vec4 world_space = omw.invViewMatrix * ((omw.invProjectionMatrix * clip_space) * vec4(1, 1, 1, 0));
+            return normalize(world_space.xyz) * HORIZON;
+        } else {
+            vec4 world_space = omw.invViewMatrix * (omw.invProjectionMatrix * clip_space);
+            return world_space.xyz / world_space.w;
+        }
+    }
+	
+	vec3 toWorld(vec2 tex)
+    {
+        vec3 v = vec3(omw.viewMatrix[0][2], omw.viewMatrix[1][2], omw.viewMatrix[2][2]);
+        v += vec3(1.0/omw.projectionMatrix[0][0] * (2.0*(1.0 - tex.x)-1.0)) * vec3(omw.viewMatrix[0][0], omw.viewMatrix[1][0], omw.viewMatrix[2][0]);
+        v += vec3(-1.0/omw.projectionMatrix[1][1] * (2.0*tex.y-1.0)) * vec3(omw.viewMatrix[0][1], omw.viewMatrix[1][1], omw.viewMatrix[2][1]);
+        return v;
+    }
+
+	float getLinearDepth(in vec2 tex)
+    {
+        float d = omw_GetDepth(tex);
+        float ndc = d * 2.0 - 1.0;
+
+        return omw.near * omw.far / (omw.far + ndc * (omw.near - omw.far));
+    }
+	
+	vec3 toView(vec2 tex)
+    {
+        float depth = min(getLinearDepth(tex), sky);
+        vec2 xy = (tex - 0.5) * depth * t;
+        return vec3(xy, depth);
+    }
+
+	
+	float time1 = omw.simulationTime * 1.6;
+	float time2 = omw.simulationTime * 1.7;
+	float time3 = omw.simulationTime * 1.8;
+	float time4 = omw.simulationTime * 1.9;
+
+	
+	vec3 ComputeRipple(vec2 UV, float CurrentTime, float Weight)
+	{
+		vec4 Ripple = omw_Texture2D(rippleTexture, UV);
+		
+		Ripple.yz = Ripple.yz * 2.0 - 1.0;
+
+		float DropFrac = fract(Ripple.w + CurrentTime);
+		float TimeFrac = DropFrac - 1.0 + Ripple.x;
+		float DropFactor = saturate(0.2 + Weight * 0.8 - DropFrac);
+		float FinalFactor = DropFactor * Ripple.x * sin( clamp(TimeFrac * 9.0, 0.0, 3.0) * PI);
+
+		return vec3(Ripple.yz * FinalFactor * 0.35, 1.0);
+	}
+
+    omw_In vec2 omw_TexCoord;
+
+    void main() {
+		
+		vec4 color = omw_Texture2D(omw_SamplerLastShader, omw_TexCoord);
+		
+		if(uDisplayRain == false)
+			omw_FragColor = vec4(color.rgb, 1.0);
+		
+		
+	
+		float ram = remap01(0.0, 1.0, RainAmount);
+		float ramp = remap01(0.0, 1.0, RainAmount);
+		//ramp = 1- pow(1-ramp, 1/1.5);
+		
+		vec3 orgcol = color.xyz;
+		vec3 screen_color = color.xyz;
+		
+		float depth = getLinearDepth(omw_TexCoord);
+		
+		vec3 wpos = wpos_at(omw_TexCoord);
+  	
+		float d = getLinearDepth(omw_TexCoord);
+        
+		vec3 pos = omw_GetWorldPosFromUV(omw_TexCoord);
+		float max_dist = distance(omw.eyePos.xyz, pos);
+		
+		vec3 camera_vector = (pos - omw.eyePos.xyz) / max_dist;
+		vec3 wnormal = normalize(cross(dFdx(pos), dFdy(pos)));
+		
+		float wmask = smoothstep(0.98, 1.0, wnormal.z);
+		
+		vec3 norm_camera_vector = normalize( camera_vector );
+		vec3 v = norm_camera_vector;
+		
+		vec3 eyevec = normalize(omw.eyePos.xyz - pos);
+		 
+		vec4 debug;
+		
+		float refpass = 0.0;
+		 
+		if (depth < 2000.0 && wmask > 0 && pos.z > 5)
+		{
+			//#if OMW_NORMALS
+			//vec3 norm = omw_GetNormals(omw_TexCoord) * 2.0 - 1.0;
+			//#endif
+			
+			vec3 norm = wnormal; //omw_GetNormals(omw_TexCoord);
+	 	
+			vec3 wnorm = omw_GetNormals(omw_TexCoord);
+			vec2 uv = pos.xy/1500.0;
+			vec2 ruv = pos.xy/150.0;
+			
+			float hormask = smoothstep(0.92, 1.0, norm.z);
+			float puddlemask = omw_Texture2D(puddleTexture, uv).r;
+			float pm2 = omw_Texture2D(puddleTexture, uv * 1.5).r;
+			float pm3 = omw_Texture2D(puddleTexture, uv * 0.3).r;
+			puddlemask = saturate(puddlemask * pm2 + pm3);	
+			puddlemask = saturate(pow(puddlemask, mix(4.0, 1.0, ram * 0.5)));		
+			//puddlemask += saturate(1.0 - hormask);
+			puddlemask = saturate(puddlemask);
+			
+			float pmask = 1.0 - puddlemask;
+			
+			norm = normalize(vec3(norm.x, norm.y, norm.z * (1+pmask) * 10.0));
+			float m = 0.92;
+			float mask = smoothstep(m, m + 0.1, norm.z);
+	 		
+			vec4 Weights = vec4(1, 0.75, 0.5, 0.25) * 1.0;
+			Weights = saturate(Weights * 4.0);
+			
+			vec3 Ripple1, Ripple2, Ripple3, Ripple4;
+			
+			if(pmask * wmask > 0.0) {
+			
+			Ripple1 = ComputeRipple(ruv + vec2( 0.25,0.0), time1, Weights.x);
+			Ripple2 = ComputeRipple(ruv * 1.1 + vec2(-0.55,0.3), time2, Weights.y);
+			Ripple3 = ComputeRipple(ruv * 1.3 + vec2(0.6, 0.85), time3, Weights.z);
+			Ripple4 = ComputeRipple(ruv * 1.5 + vec2(0.5,-0.75), time4, Weights.w);
+			}
+		
+			vec4 Z = mix(vec4(1.0), vec4(Ripple1.z, Ripple2.z, Ripple3.z, Ripple4.z), Weights);
+			vec3 Normal = vec3( Weights.x * Ripple1.xy + Weights.y * Ripple2.xy + Weights.z * Ripple3.xy + Weights.w * Ripple4.xy, Z.x * Z.y * Z.z * Z.w);
+			
+			
+			vec3 ripnorm = normalize(Normal) * 0.5 + 0.5;
+			 
+			ripnorm = ripnorm * 2.0 - 1.0;
+			float zedge = pow(saturate(1 - abs(puddlemask * 2.0  - 1.0)), 2.0) * wnorm.z;
+			
+			ripnorm = normalize(vec3(ripnorm.xy, ripnorm.z * mix(10, 0.1, ram)));
+			ripnorm -= zedge;
+			vec3 combnom = vec3((norm.xy + 0 * ripnorm.xy),1);
+			vec3 mudp = vec3(0.44, 0.38, 0.28) * 0.6 * (omw.fogColor.r + 0.1);
+			
+			mudp = mix(screen_color, mudp, uPuddleTransparency);
+			 
+			float fresnel = dot(-norm_camera_vector, ripnorm);
+			fresnel = 0.02 + pow(( 2.0 * (fresnel - 0.23)), 1);
+			fresnel = 1.0 - saturate(fresnel);
+			fresnel *= 1.0 - puddlemask;
+			
+			
+			
+			vec3 rain = mix(mudp, omw.fogColor.rgb, fresnel);
+			if(uSSRActive)
+				rain = mix(mudp, screen_color, fresnel);
+			
+			float fogcov = omw_EstimateFogCoverageFromUV(omw_TexCoord);
+			
+			#ifdef ZESTERER
+			rain = mix(rain, omw.fogColor.rgb * 0.73, fogcov);
+			#else 
+			rain = mix(rain, omw.fogColor.rgb, fogcov);
+			#endif
+			rain = mix(screen_color, rain, saturate(ramp * (1.0 - puddlemask)));
+			
+
+
+
+			refpass = saturate(ramp * (1.0 - puddlemask));
+			rain = mix(screen_color, rain, (1.0 - float(omw.isInterior))); 
+			color = vec4(vec3(rain), 1.0);
+		}
+		
+		#ifdef DEBUG
+		if(ramp > omw_TexCoord.y && omw_TexCoord.x > 0.9)
+			color = vec4(1);
+		#endif
+				
+		float px = dFdx(refpass);
+		float py = dFdy(refpass);
+		
+		float ddmask = clamp(abs(px) + abs(py), 0, 1.0);
+
+		refpass = refpass * ( 1 - ddmask);
+		refpass = 1.0 - (1.0 - float(omw.isInterior)) * refpass;
+		
+		if(uDisplayRain)
+        omw_FragColor = vec4(vec3(color.rgb), refpass);
+    }
+}
+
+technique {
+    passes = wet;
+    version = "0.1";
+    description = "Puddles";
+    author = "Dexter";
+	pass_normals = true;
+}

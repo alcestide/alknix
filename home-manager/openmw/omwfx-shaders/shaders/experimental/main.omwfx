@@ -1,0 +1,479 @@
+main_pass {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgba16f;
+    source_type = float;
+    source_format = rgba;
+}
+
+uniform_bool ShowScene {
+    default = false;
+    description = "Show original scene. This can't be a toggable shader as of right now.";
+}
+
+uniform_float Curve {
+    min = 0.0;
+    max = 5.0;
+    default = 1.35;
+    step = 0.05;
+}
+
+uniform_float Radius {
+    min = 0.0;
+    max = 1.0;
+    step = 0.05;
+    default = 0.83;
+}
+
+uniform_float MixFactor {
+    min = 0.0;
+    max = 1.0;
+    step = 0.05;
+    default = 0.33;
+}
+
+uniform_float Intensity {
+    min = 0.0;
+    max = 5.0;
+    step = 0.5;
+    default = 1.0;
+}
+
+uniform_float BlendFactor {
+    default = 0.3;
+    min = 0.0;
+    max = 1.0;
+    step = 0.03;
+    static = false;
+}
+
+render_target RT_DS0 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.5;
+    height_ratio = 0.5;
+}
+
+render_target RT_DS1 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.25;
+    height_ratio = 0.25;
+}
+
+render_target RT_DS2 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.125;
+    height_ratio = 0.125;
+}
+
+render_target RT_DS3 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.0625;
+    height_ratio = 0.0625;
+}
+
+render_target RT_DS4 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.03125;
+    height_ratio = 0.03125;
+}
+
+render_target RT_DS5 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.015625;
+    height_ratio = 0.015625;
+}
+
+render_target RT_DS6 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.0078125;
+    height_ratio = 0.0078125;
+}
+
+render_target RT_DS7 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.00390625;
+    height_ratio = 0.00390625;
+}
+
+render_target RT_US0 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.5;
+    height_ratio = 0.5;
+}
+
+render_target RT_US1 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.25;
+    height_ratio = 0.25;
+}
+
+render_target RT_US2 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.125;
+    height_ratio = 0.125;
+}
+
+render_target RT_US3 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.0625;
+    height_ratio = 0.0625;
+}
+
+render_target RT_US4 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.03125;
+    height_ratio = 0.03125;
+}
+
+render_target RT_US5 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.015625;
+    height_ratio = 0.015625;
+}
+
+render_target RT_US6 {
+    wrap_s = clamp_to_edge;
+    wrap_t = clamp_to_edge;
+    internal_format = rgb16f;
+    source_type = float;
+    source_format = rgb;
+    width_ratio = 0.0078125;
+    height_ratio = 0.0078125;
+}
+
+shared {
+    vec3 downsample(sampler2D tex, in vec2 UV, vec2 PixelSize)
+    {
+        const vec2 Coords[13] = vec2[13](
+            vec2(-1.0,  1.0), vec2(1.0,  1.0),
+            vec2(-1.0, -1.0), vec2(1.0, -1.0),
+
+            vec2(-2.0,  2.0), vec2(0.0,  2.0), vec2(2.0,  2.0),
+            vec2(-2.0,  0.0), vec2(0.0,  0.0), vec2(2.0,  0.0),
+            vec2(-2.0, -2.0), vec2(0.0, -2.0), vec2(2.0, -2.0)
+        );
+
+        const float Weights[13] = float[13](
+            0.125, 0.125,
+            0.125, 0.125,
+
+            0.0555555, 0.0555555, 0.0555555,
+            0.0555555, 0.0555555, 0.0555555,
+            0.0555555, 0.0555555, 0.0555555
+        );
+
+        vec3 color = vec3(0.0);
+
+        for (int i = 0; i < 13; i++)
+        {
+            vec2 CurrentUV = UV + Coords[i] * PixelSize;
+            color += Weights[i] * omw_Texture2D(tex, CurrentUV).rgb;
+        }
+
+        return color;
+    }
+
+    vec3 upsample(sampler2D tex, in vec2 UV, vec2 PixelSize)
+    {
+        const vec2 Coords[9] = vec2[9](
+            vec2( -1.0,  1.0 ), vec2(  0.0,  1.0 ), vec2(  1.0,  1.0 ),
+            vec2( -1.0,  0.0 ), vec2(  0.0,  0.0 ), vec2(  1.0,  0.0 ),
+            vec2( -1.0, -1.0 ), vec2(  0.0, -1.0 ), vec2(  1.0, -1.0 )
+        );
+
+        const float Weights[9] = float[9](
+            0.0625, 0.125, 0.0625,
+            0.125,  0.25,  0.125,
+            0.0625, 0.125, 0.0625
+        );
+
+        vec3 Color = vec3(0.0, 0.0, 0.0);
+
+        for( int i = 0; i < 9; i++ )
+        {
+            vec2 CurrentUV = UV + Coords[i] * PixelSize;
+            Color += Weights[i] * omw_Texture2D(tex, CurrentUV).rgb;
+        }
+
+        return Color;
+    }
+}
+
+fragment DS0(target=RT_DS0) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 0.5;
+        vec3 Color = downsample(omw_SamplerLastShader, omw_TexCoord, ps);
+        float X = dot(vec3(0.33), Color);
+        Color = pow(Color, vec3(2.2));
+        Color = mix(vec3(X), Color, 1.0);
+        Color *= (pow(X, Curve) * Intensity * Intensity * Intensity) / (X + 0.001);
+        omw_FragColor.rgb = Color;
+    }
+}
+
+fragment DS1(target=RT_DS1, rt1=RT_DS0) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution;
+        omw_FragColor.rgb = downsample(RT_DS0, omw_TexCoord, ps);
+    }
+}
+
+fragment DS2(target=RT_DS2, rt1=RT_DS1) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 2;
+        omw_FragColor.rgb = downsample(RT_DS1, omw_TexCoord, ps);
+    }
+}
+
+fragment DS3(target=RT_DS3, rt1=RT_DS2) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 4;
+        omw_FragColor.rgb = downsample(RT_DS2, omw_TexCoord, ps);
+    }
+}
+
+fragment DS4(target=RT_DS4, rt1=RT_DS3) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 8;
+        omw_FragColor.rgb = downsample(RT_DS3, omw_TexCoord, ps);
+    }
+}
+
+fragment DS5(target=RT_DS5, rt1=RT_DS4) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 16;
+        omw_FragColor.rgb = downsample(RT_DS4, omw_TexCoord, ps);
+    }
+}
+
+fragment DS6(target=RT_DS6, rt1=RT_DS5) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 32;
+        omw_FragColor.rgb = downsample(RT_DS5, omw_TexCoord, ps);
+    }
+}
+
+fragment DS7(target=RT_DS7, rt1=RT_DS6) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 64;
+        omw_FragColor.rgb = downsample(RT_DS6, omw_TexCoord, ps);
+    }
+}
+
+fragment US6(target=RT_US6, rt1=RT_DS6, rt2=RT_DS7) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 128;
+
+        vec3 CurrentColor = omw_Texture2D(RT_DS6, omw_TexCoord).rgb;
+        vec3 PreviousColor = upsample(RT_DS7, omw_TexCoord, ps);
+
+        omw_FragColor.rgb = mix(CurrentColor, PreviousColor, Radius);
+    }
+}
+
+fragment US5(target=RT_US5, rt1=RT_US6, rt2=RT_DS5) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 32;
+        vec3 CurrentColor = omw_Texture2D(RT_DS5, omw_TexCoord).rgb;
+        vec3 PreviousColor = upsample(RT_US6, omw_TexCoord, ps);
+
+        omw_FragColor.rgb = mix(CurrentColor, PreviousColor, Radius);
+    }
+}
+
+fragment US4(target=RT_US4, rt1=RT_US5, rt2=RT_DS4) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 16;
+        vec3 CurrentColor = omw_Texture2D(RT_DS4, omw_TexCoord).rgb;
+        vec3 PreviousColor = upsample(RT_US5, omw_TexCoord, ps);
+
+        omw_FragColor.rgb = mix(CurrentColor, PreviousColor, Radius);
+    }
+}
+
+fragment US3(target=RT_US3, rt1=RT_US4, rt2=RT_DS3) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 8;
+        vec3 CurrentColor = omw_Texture2D(RT_DS3, omw_TexCoord).rgb;
+        vec3 PreviousColor = upsample(RT_US4, omw_TexCoord, ps);
+
+        omw_FragColor.rgb = mix(CurrentColor, PreviousColor, Radius);
+    }
+}
+
+fragment US2(target=RT_US2, rt1=RT_US3, rt2=RT_DS2) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 4;
+        vec3 CurrentColor = omw_Texture2D(RT_DS2, omw_TexCoord).rgb;
+        vec3 PreviousColor = upsample(RT_US3, omw_TexCoord, ps);
+
+        omw_FragColor.rgb = mix(CurrentColor, PreviousColor, Radius);
+    }
+}
+
+fragment US1(target=RT_US1, rt1=RT_US2, rt2=RT_DS1) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution * 2;
+        vec3 CurrentColor = omw_Texture2D(RT_DS1, omw_TexCoord).rgb;
+        vec3 PreviousColor = upsample(RT_US2, omw_TexCoord, ps);
+
+        omw_FragColor.rgb = mix(CurrentColor, PreviousColor, Radius);
+    }
+}
+
+fragment US0(target=RT_US0, rt1=RT_US1, rt2=RT_DS0) {
+    omw_In vec2 omw_TexCoord;
+    void main()
+    {
+        vec2 ps = omw.rcpResolution;
+        vec3 CurrentColor = omw_Texture2D(RT_DS0, omw_TexCoord).rgb;
+        vec3 PreviousColor = upsample(RT_US1, omw_TexCoord, ps);
+
+        omw_FragColor.rgb = mix(CurrentColor, PreviousColor, Radius);
+    }
+}
+
+fragment main(rt1=RT_US0) {
+    omw_In vec2 omw_TexCoord;
+
+    vec3 tonemap(vec3 x)
+    {
+        const float a = 2.51;
+        const float b = 0.03;
+        const float c = 2.43;
+        const float d = 0.59;
+        const float e = 0.14;
+        return clamp((x * (a * x + b)) / (x * (c * x + d) + e), 0.0, 1.0);
+    }
+
+    void main()
+    {
+        vec4 OriginalScene = omw_GetLastShader(omw_TexCoord);
+
+        if (ShowScene)
+        {
+            omw_FragColor = OriginalScene;
+            return;
+        }
+
+        vec3 Bloom = omw_Texture2D(RT_US0, omw_TexCoord).rgb;
+        Bloom = pow(Bloom, vec3(1/2.2));
+
+        vec3 Color = OriginalScene.rgb;
+
+        Color = mix(Color, (Bloom * Intensity), MixFactor);
+
+        // Color = pow(Color, vec3(2.2));
+        // Color = tonemap(Color);
+        // Color = pow(Color, vec3(1.0 / 2.2));
+
+        omw_FragColor = vec4(Color, OriginalScene.a);
+    }
+}
+
+technique {
+    description = "Main pass with bloom. Based on https://www.froyok.fr/blog/2021-12-ue4-custom-bloom/";
+    version = "1.0";
+    author = "wazabear";
+    passes = DS0,
+             DS1,
+             DS2,
+             DS3,
+             DS4,
+             DS5,
+             DS6,
+             DS7,
+             US6,
+             US5,
+             US4,
+             US3,
+             US2,
+             US1,
+             US0,
+             main;
+    hdr = false;
+}

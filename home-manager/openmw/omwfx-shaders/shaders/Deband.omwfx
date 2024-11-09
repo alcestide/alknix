@@ -1,0 +1,261 @@
+uniform_int threshold_preset  {
+    default = 0;
+    min = 0;
+    max = 3;
+    step = 1;
+    display_name = "Debanding strength";
+    description = "Debanding presets. (Low 0, Medium 1, High 2, Custom 3) Use Custom to be able to use custom thresholds in the advanced section.";
+}
+
+uniform_float range {
+    default = 24.0;
+    min = 1.0;
+    max = 32.0;
+    step = 0.5;
+    display_name = "Initial radius";
+    description = "The radius increases linearly for each iteration. A higher radius will find more gradients, but a lower radius will smooth more aggressively.";
+}
+
+uniform_int iterations  {
+    default = 1;
+    min = 1;
+    max = 4;
+    step = 1;
+    display_name = "Iterations";
+    description = "The number of debanding steps to perform per sample. Each step reduces a bit more banding, but takes time to compute.";
+}
+
+uniform_float custom_avgdiff {
+    header = "Custom";
+    default = 1.8;
+    min = 0.0;
+    max = 255.0;
+    step = 2.0;
+    display_name = "Average threshold";
+    description = "Threshold for the difference between the average of reference pixel values and the original pixel value. Higher numbers increase the debanding strength but progressively diminish image details. In pixel shaders a 8-bit color step equals to 1.0/255.0";
+}
+
+uniform_float custom_maxdiff {
+    default = 4.0;
+    min = 0.0;
+    max = 255.0;
+    step = 2.0;
+    display_name = "Maximum threshold";
+    description = "Threshold for the difference between the maximum difference of one of the reference pixel values and the original pixel value. Higher numbers increase the debanding strength but progressively diminish image details. In pixel shaders a 8-bit color step equals to 1.0/255.0";
+}
+
+uniform_float custom_middiff {
+    default = 2.0;
+    min = 0.0;
+    max = 255.0;
+    step = 3.0;
+    display_name = "Middle threshold";
+    description = "Threshold for the difference between the average of diagonal reference pixel values and the original pixel value. Higher numbers increase the debanding strength but progressively diminish image details. In pixel shaders a 8-bit color step equals to 1.0/255.0";
+}
+
+uniform_bool debug_output {
+    header = "Debug";
+    display_name = "Debug View";
+    description = "Shows the low-pass filtered (blurred) output. Could be useful when making sure that range and iterations capture all of the banding in the picture.";
+}
+
+fragment PS_Deband {
+    omw_In vec2 omw_TexCoord;
+
+    float rand(float x)
+    {
+        return fract(x / 41.0);
+    }
+
+    float permute(float x)
+    {
+        return mod((34.0 * x + 1.0) * x, 289.0);
+    }
+
+    void analyze_pixels(vec3 ori, sampler2D tex, vec2 texcoord, vec2 _range, vec2 dir, out vec3 ref_avg, out vec3 ref_avg_diff, out vec3 ref_max_diff, out vec3 ref_mid_diff1, out vec3 ref_mid_diff2)
+    {
+        // Sample at quarter-turn intervals around the source pixel
+
+        // South-east
+        vec3 ref = omw_Texture2D(tex, texcoord + _range * dir).rgb;
+        vec3 diff = abs(ori - ref);
+        ref_max_diff = diff;
+        ref_avg = ref;
+        ref_mid_diff1 = ref;
+
+        // North-west
+        ref = omw_Texture2D(tex, texcoord + _range * -dir).rgb;
+        diff = abs(ori - ref);
+        ref_max_diff = max(ref_max_diff, diff);
+        ref_avg += ref;
+        ref_mid_diff1 = abs(((ref_mid_diff1 + ref) * 0.5) - ori);
+
+        // North-east
+        ref = omw_Texture2D(tex, texcoord + _range * vec2(-dir.y, dir.x)).rgb;
+        diff = abs(ori - ref);
+        ref_max_diff = max(ref_max_diff, diff);
+        ref_avg += ref;
+        ref_mid_diff2 = ref;
+
+        // South-west
+        ref = omw_Texture2D(tex, texcoord + _range * vec2( dir.y, -dir.x)).rgb;
+        diff = abs(ori - ref);
+        ref_max_diff = max(ref_max_diff, diff);
+        ref_avg += ref;
+        ref_mid_diff2 = abs(((ref_mid_diff2 + ref) * 0.5) - ori);
+
+        ref_avg *= 0.25; // Normalize avg
+        ref_avg_diff = abs(ori - ref_avg);
+    }
+
+    void main()
+    {
+        vec2 texcoord = omw_TexCoord;
+        const float drandom = 12.0;
+        // Settings
+
+        float avgdiff;
+        float maxdiff;
+        float middiff;
+
+        if (threshold_preset == 0) {
+            avgdiff = 0.6;
+            maxdiff = 1.9;
+            middiff = 1.2;
+        }
+        else if (threshold_preset == 1) {
+            avgdiff = 1.8;
+            maxdiff = 4.0;
+            middiff = 2.0;
+        }
+        else if (threshold_preset == 2) {
+            avgdiff = 3.4;
+            maxdiff = 6.8;
+            middiff = 3.3;
+        }
+        else if (threshold_preset == 3) {
+            avgdiff = custom_avgdiff;
+            maxdiff = custom_maxdiff;
+            middiff = custom_middiff;
+        }
+
+        // Normalize
+        avgdiff /= 255.0;
+        maxdiff /= 255.0;
+        middiff /= 255.0;
+
+        // Initialize the PRNG by hashing the position + a random uniform
+        float h = permute(permute(permute(texcoord.x) + texcoord.y) + drandom / 32767.0);
+
+        vec3 ref_avg; // Average of 4 reference pixels
+        vec3 ref_avg_diff; // The difference between the average of 4 reference pixels and the original pixel
+        vec3 ref_max_diff; // The maximum difference between one of the 4 reference pixels and the original pixel
+        vec3 ref_mid_diff1; // The difference between the average of SE and NW reference pixels and the original pixel
+        vec3 ref_mid_diff2; // The difference between the average of NE and SW reference pixels and the original pixel
+
+        vec3 ori = omw_GetLastShader(texcoord).rgb;
+        vec3 res; // Final pixel
+
+        // Compute a random angle
+        float dir  = rand(permute(h)) * 6.2831853;
+        vec2 o = vec2(cos(dir), sin(dir));
+
+        for (int i = 1; i <= iterations; ++i) {
+            // Compute a random distance
+            float dist = rand(h) * range * i;
+            vec2 pt = dist * omw.rcpResolution;
+
+            analyze_pixels(ori, omw_SamplerLastShader, texcoord, pt, o,
+                        ref_avg,
+                        ref_avg_diff,
+                        ref_max_diff,
+                        ref_mid_diff1,
+                        ref_mid_diff2);
+
+            vec3 ref_avg_diff_threshold = vec3(avgdiff) * float(i);
+            vec3 ref_max_diff_threshold = vec3(maxdiff) * float(i);
+            vec3 ref_mid_diff_threshold = vec3(middiff) * float(i);
+
+            // Fuzzy logic based pixel selection
+            vec3 factor = pow(clamp(3.0 * (1.0 - ref_avg_diff  / ref_avg_diff_threshold), 0.0, 1.0) *
+                                clamp(3.0 * (1.0 - ref_max_diff  / ref_max_diff_threshold), 0.0, 1.0) *
+                                clamp(3.0 * (1.0 - ref_mid_diff1 / ref_mid_diff_threshold), 0.0, 1.0) *
+                                clamp(3.0 * (1.0 - ref_mid_diff2 / ref_mid_diff_threshold), 0.0, 1.0), vec3(0.1));
+
+            if (debug_output)
+                res = ref_avg;
+            else
+                res = mix(ori, ref_avg, factor);
+
+            h = permute(h);
+        }
+
+        const float dither_bit = 8.0; //Number of bits per channel. Should be 8 for most monitors.
+
+        /*------------------------.
+        | :: Ordered Dithering :: |
+        '------------------------*/
+        //Calculate grid position
+        float grid_position = fract(dot(texcoord, (omw.resolution * vec2(1.0 / 16.0, 10.0 / 36.0)) + 0.25));
+
+        //Calculate how big the shift should be
+        float dither_shift = 0.25 * (1.0 / (pow(2, dither_bit) - 1.0));
+
+        //Shift the individual colors differently, thus making it even harder to see the dithering pattern
+        vec3 dither_shift_RGB = vec3(dither_shift, -dither_shift, dither_shift); //subpixel dithering
+
+        //modify shift acording to grid position.
+        dither_shift_RGB = mix(2.0 * dither_shift_RGB, -2.0 * dither_shift_RGB, grid_position); //shift acording to grid position.
+
+        //shift the color by dither_shift
+        res += dither_shift_RGB;
+    
+        omw_FragColor = vec4(res, 1.0);
+    }
+}
+
+technique {
+    passes = PS_Deband;
+    description = "
+Alleviates color banding by trying to approximate original color values.
+  
+Copyright (c) 2015 Niklas Haas
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the 'Software'), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Modified and optimized for ReShade by JPulowski
+https://reshade.me/forum/shader-presentation/768-deband
+
+Do not distribute without giving credit to the original author(s).
+
+1.0  - Initial release
+1.1  - Replaced the algorithm with the one from MPV
+1.1a - Minor optimizations
+        Removed unnecessary lines and replaced them with ReShadeFX intrinsic counterparts
+2.0  - Replaced 'grain' with CeeJay.dk's ordered dithering algorithm and enabled it by default
+        The configuration is now more simpler and straightforward
+        Some minor code changes and optimizations
+        Improved the algorithm and made it more robust by adding some of the madshi's
+        improvements to flash3kyuu_deband which should cause an increase in quality. Higher
+        iterations/ranges should now yield higher quality debanding without too much decrease
+        in quality.
+        Changed licensing text and original source code URL";
+    author = "Haasn, ported by Wazabear";
+    version = "1.0";
+}

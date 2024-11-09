@@ -1,0 +1,86 @@
+
+uniform_float uMidPoint {
+    header = "Shape";
+    default = 0.5;
+    min = 0.0;
+    max = 1.0;
+    step = 0.005;
+    description = "High values restrict the vignette closer to the corners, between 0 and 1";
+    display_name = "Midpoint";
+}
+
+uniform_float uRoundness {
+    default = 0.5;
+    min = 0.0;
+    max = 1.0;
+    step = 0.005;
+    description = "Controls the shape of the vignette, from a rounded rectangle (0.0), to an oval (0.5), to a circle (1.0)";
+    display_name = "Roundness";
+}
+
+uniform_float uFeather {
+    default = 0.5;
+    min = 0.0;
+    max = 1.0;
+    step = 0.005;
+    description = "Softening amount of the vignette effect, between 0 and 1";
+    display_name = "Softening";
+}
+
+uniform_vec3 uColor {
+    header = "Color";
+    default = vec3(0.1, 0.1, 0.1);
+    min = vec3(0.0, 0.0, 0.0);
+    max = vec3(1.0, 1.0, 1.0);
+    description = "Color of the vignette effect";
+    display_name = "Color";
+    step = 0.01;
+}
+
+vertex vignette {
+    #if OMW_USE_BINDINGS
+        omw_In vec2 omw_Vertex;
+    #endif
+
+    omw_Out vec2 omw_TexCoord;
+    omw_Out vec3 vignette;
+
+    void main()
+    {
+        omw_Position = vec4(omw_Vertex.xy, 0.0, 1.0);
+        omw_TexCoord = omw_Position.xy * 0.5 + 0.5;
+
+        float oval = min(uRoundness, 0.5) * 2.0;
+        float circle = (max(uRoundness, 0.5) - 0.5) * 2.0;
+        float roundness =  (1.0 - oval) * 6.0 + oval;
+        vignette.x = (1.0 - uMidPoint) * mix(2.2, 3.0, oval) * (1.0 - 0.1 * uFeather);
+        vignette.y = roundness * mix(1.0 + 4.0 * (1.0 - uFeather), 1.0, sqrt(oval));
+        vignette.z = mix(1.0, omw.resolution.x / omw.resolution.y, circle);
+    }
+}
+
+fragment vignette {
+    omw_In vec2 omw_TexCoord;
+    omw_In vec3 vignette;
+
+    void main()
+    {
+        float midPoint = vignette.x;
+        float radius = vignette.y;
+        float aspect = vignette.z;
+
+        vec2 dist = abs(omw_TexCoord - 0.5) * midPoint;
+        dist.x *= aspect;
+        dist = pow(clamp(dist, 0.0, 1.0), vec2(radius));
+
+        float amount = pow(clamp(1.0 - dot(dist, dist), 0.0, 1.0), uFeather * 5.0);
+        omw_FragColor = vec4(omw_GetLastShader(omw_TexCoord).rgb * mix(uColor, vec3(1.0), amount), 1.0);
+    }
+}
+
+technique {
+    passes = vignette;
+    description = "Vignette, based on Filament";
+    author = "Wazabear";
+    version = "1.0";
+}

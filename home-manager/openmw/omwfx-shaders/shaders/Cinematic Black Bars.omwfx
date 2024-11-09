@@ -1,0 +1,45 @@
+uniform_float ratio {
+    default = 2.20;
+    step = 0.05;
+    min = 0.1;
+    max = 8.0;
+    display_name = "Ratio";
+}
+
+uniform_float soft {
+    default = 0.005;
+    step = 0.005;
+    min = 0.0001;
+    max = 0.2;
+    display_name = "Softness";
+}
+
+fragment horbars2() {
+    omw_In vec2 omw_TexCoord;
+
+    void main()
+    {
+        float h = clamp((1.0 - ((1.0/omw.rcpResolution.x)/ratio)/(1.0/omw.rcpResolution.y)) * 0.5, 0.0, 1.0);
+
+        vec4 c0 = vec4(0.0);
+        float vis = smoothstep(h - soft, h, omw_TexCoord.y) * smoothstep(1.0 - (h - soft), 1.0 - h, omw_TexCoord.y);
+        c0 = clamp(vis, 0.0, 1.0) * texture(omw_SamplerLastShader, omw_TexCoord);;
+
+        omw_FragColor = c0;
+    }
+}
+
+technique {
+    description = "Cinematic black bars
+
+Aspect Ratios:
+    
+1.78:1 (16:9 widescreen video)
+1.85:1 (35mm standard)
+2.20:1 (70mm standard)
+2.35:1 (35mm anamorphic pre-1970)
+2.39:1 (35mm anamorphic post-1970)";
+    version = "1.0";
+    author = "vtastek";
+    passes =  horbars2;
+}

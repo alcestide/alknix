@@ -1,7 +1,15 @@
-{pkgs,...}:
-
-{ home.packages = with pkgs; [
-	nixos-generators
+{pkgs,config,lib,...}:
+/*
+let
+  newOpenMW = pkgs.openmw.overrideAttrs (old: {
+    postInstall = (old.postInstall or "") + ''
+      cp -r ./openmw/omwfx-shaders/* "$out/share/games/openmw/resources/"
+    '';
+  });
+  in
+*/
+  { home.packages = with pkgs; [
+	    nixos-generators
         nix-search-cli
         nix-output-monitor
         nix-init
@@ -103,7 +111,7 @@
         duckstation
         pcsx2
         rpcs3
-        openmw
+        #openmw
         portmod
         davinci-resolve
         obs-studio
