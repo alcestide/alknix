@@ -2,7 +2,6 @@
 
   {
   home.packages = with pkgs; [
-        OpenMW-Override
 	    nixos-generators
         nix-search-cli
         nix-output-monitor
@@ -82,9 +81,9 @@
         w3m
         pulsemixer
         xboxdrv
+        kdePackages.konsole
 
         # [Desktop Apps]
-        teams-for-linux
         ark
         pavucontrol
         pasystray
@@ -105,7 +104,6 @@
         duckstation
         pcsx2
         rpcs3
-        #openmw
         portmod
         davinci-resolve
         obs-studio

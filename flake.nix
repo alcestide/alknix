@@ -26,19 +26,19 @@
   in {
     inherit lib;
     nixosConfigurations = {
-      "${host}" = 
+      "${host}" =
       nixpkgs.lib.nixosSystem {
         specialArgs = {inherit self inputs outputs system username host nixvim;};
         modules = [
-                    ./global/configuration.nix 
+                    ./global/configuration.nix
                     agenix.nixosModules.default
                     catppuccin.nixosModules.catppuccin
                     home-manager.nixosModules.home-manager {
-                      home-manager = { 
+                      home-manager = {
                       useGlobalPkgs = true;
                       useUserPackages = true;
-                        users.${username} = 
-                        { imports = [ 
+                        users.${username} =
+                        { imports = [
                           ./home-manager/home.nix
                           catppuccin.homeManagerModules.catppuccin
                                     ];

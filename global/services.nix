@@ -41,8 +41,7 @@
       userServices = true;
       workstation = true;
     };
-};
-
+  };
 
 
   };

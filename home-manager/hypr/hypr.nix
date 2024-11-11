@@ -16,7 +16,7 @@ services.hypridle = {
     wayland.windowManager.hyprland = {
       enable = true;
       extraConfig = ''
-      ${builtins.readFile ./hyprland.conf}
+      ${builtins.readFile ./hyprland/hyprland.conf}
       '';
     };
 
@@ -32,7 +32,7 @@ services.hypridle = {
     programs.hyprlock = {
       enable = true;
       extraConfig = ''
-      ${builtins.readFile ./hyprlock.conf}
+      ${builtins.readFile ./hyprlock/hyprlock.conf}
       '';
     };
 
