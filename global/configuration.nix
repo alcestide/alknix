@@ -36,7 +36,9 @@ age.secrets.cloudflare = {
   environment.systemPackages = with pkgs; [
      inputs.nixvim.packages."x86_64-linux".default
      inputs.agenix.packages."x86_64-linux".default
-     vim 
+     vim
+     curl
+     git
      wget
      xclip
      wireguard-tools
