@@ -14,6 +14,7 @@
         zip
         xz
         unzip
+        unrar
         p7zip
         ripgrep
         psmisc

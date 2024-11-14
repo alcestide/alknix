@@ -30,6 +30,11 @@
       openFirewall = true;
     };
 
+    plex = {
+      enable = true;
+      openFirewall = true;
+    };
+
     avahi = {
     enable = true;
     nssmdns4 = true;
