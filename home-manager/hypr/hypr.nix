@@ -2,7 +2,7 @@
 {
 
 services.hypridle = {
-      enable = true;
+      enable = false;
       settings = {
         listener = [
           {
@@ -24,7 +24,8 @@ services.hypridle = {
       enable = true;
       settings = {
         preload = ["/etc/nixos/home-manager/hypr/assets/nix-catppuccin.png"];
-        wallpaper = ["DP-1,/etc/nixos/home-manager/hypr/assets/nix-catppuccin.png"];
+        wallpaper = ["DP-1,/etc/nixos/home-manager/hypr/assets/nix-catppuccin.png"
+                     "HDMI-A-1,/etc/nixos/home-manager/hypr/assets/nix-catppuccin.png"];
         splash = false;
     };
     };

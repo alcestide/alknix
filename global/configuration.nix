@@ -29,6 +29,7 @@
     LC_TELEPHONE = "it_IT.UTF-8";
     LC_TIME = "it_IT.UTF-8";
   };
+  /*
 
   powerManagement.enable = true;
   systemd.sleep.extraConfig = ''
@@ -41,6 +42,8 @@
     IdelActionSec=1min
   '';
 
+  */
+
 environment.sessionVariables = {
   EDITOR = "nvim";
   QT_STYLE_OVERRIDE = pkgs.dracula-theme;
@@ -49,6 +52,7 @@ environment.sessionVariables = {
 environment.systemPackages = [
   inputs.nixvim.packages."x86_64-linux".default
   inputs.agenix.packages."x86_64-linux".default
+  inputs.rose-pine-hyprcursor.packages."x86_64-linux".default
   self.inputs.nix-alien.packages."x86_64-linux".nix-alien
   pkgs.gcc
   pkgs.gparted

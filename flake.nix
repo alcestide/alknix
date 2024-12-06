@@ -10,6 +10,7 @@
     agenix.url = "github:ryantm/agenix";
     flake-utils.url = "github:numtide/flake-utils";
     catppuccin.url = "github:catppuccin/nix";
+    rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
   };
 
   outputs = {

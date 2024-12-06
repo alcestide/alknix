@@ -1,5 +1,6 @@
 [global]
-
+    monitor = 1
+    follow = none
     width = 300
     height = 300
     origin = bottom-center

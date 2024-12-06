@@ -20,6 +20,8 @@
         psmisc
         fzf
         gnupg
+        brightnessctl
+        brillo
         mtr
         iperf
         dnsutils
@@ -42,6 +44,7 @@
         yq-go
         gh
         calc
+        calcure
         python3
         glfw
         gnumake
@@ -68,6 +71,8 @@
         wireguard-tools
         yt-dlp
         gallery-dl
+        ani-cli
+        mangal
         playerctl
         pulseaudio
         coreutils-prefixed
@@ -89,28 +94,28 @@
         pavucontrol
         pasystray
         blueman
+        calibre
+        libreoffice
+        freetube
         obsidian
         feishin
         telegram-desktop
+        heroic
         filezilla
         remmina
+        tigervnc
         transmission_4-gtk
         gimp
         font-manager
         zathura
-        evince
         nicotine-plus
         picard
         lutris
         duckstation
         pcsx2
-        rpcs3
-        portmod
-        davinci-resolve
         obs-studio
         obs-studio-plugins.wlrobs
         obs-studio-plugins.obs-pipewire-audio-capture
-        unigine-valley
 
       ];
     }

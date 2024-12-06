@@ -14,7 +14,7 @@ fileSystems."/mnt/nvme" =
 
   fileSystems."/mnt/disk2" =
 { device = "/dev/disk/by-uuid/30d5784c-5b1d-4112-87b2-654c1b8ab5e0";
-  fsType = "ext4"; 
+  fsType = "ext4";
   options = [ "rw" "nofail" ];
   };
 }

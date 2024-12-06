@@ -13,5 +13,9 @@
         enable = true;
       };
 
+      librewolf = {
+        enable = true;
+      };
+
     };
     }

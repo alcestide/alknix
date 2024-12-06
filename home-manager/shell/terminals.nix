@@ -32,6 +32,7 @@
     foot = {
       enable = true;
       catppuccin.enable = true;
+      settings.main.font =  "Fira Code:size=14";
     };
   };
 }
