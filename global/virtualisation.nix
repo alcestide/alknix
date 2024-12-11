@@ -1,6 +1,6 @@
 {pkgs, ...}:
 {
-  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enable = false;
 users.extraGroups.vboxusers.members = [ "alcestide" ];
 virtualisation.libvirtd = {
     enable = true;

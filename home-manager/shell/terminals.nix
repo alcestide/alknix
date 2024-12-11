@@ -1,6 +1,7 @@
 {pkgs,...}:
 {
   programs = {
+  /*
   alacritty = {
 	    enable = true;
         catppuccin.enable = true;
@@ -19,16 +20,7 @@
 	      selection.save_to_clipboard = true;
 	    };
       };
-/*
-    kitty =  {
-      enable = true;
-      font.name = "Fira Code";
-      catppuccin.enable = true;
-      settings = {
-        confirm_os_window_close = 0;
-      };
-    };
-*/
+  */
     foot = {
       enable = true;
       catppuccin.enable = true;

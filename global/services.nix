@@ -4,8 +4,11 @@
   services = {
 
     xserver.enable = true;
+    #xserver.displayManager.lightdm.enable = true;
     xserver.displayManager.gdm.enable = true;
     xserver.desktopManager.gnome.enable = true;
+    #xserver.desktopManager.xfce.enable = true;
+    xserver.displayManager.gdm.wayland = true;
 
     pcscd.enable = true;
     openssh.enable = true;
@@ -48,7 +51,7 @@
     };
 */
     avahi = {
-    enable = true;
+    enable = false;
     nssmdns4 = true;
     publish = {
       enable = true;

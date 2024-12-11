@@ -9,13 +9,5 @@
           userEmail = "angpanariti@gmail.com";
       };
 
-      firefox = {
-        enable = true;
-      };
-
-      librewolf = {
-        enable = true;
-      };
-
     };
     }

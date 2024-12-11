@@ -88,15 +88,15 @@
         xboxdrv
 
         # [Desktop Apps]
-        gnome.gnome-terminal
-        gnome.gnome-tweaks
+        gnome-terminal
+        gnome-tweaks
         pavucontrol
         pasystray
         blueman
         calibre
         libreoffice
+        firefox
         freetube
-        reaper
         obsidian
         feishin
         telegram-desktop

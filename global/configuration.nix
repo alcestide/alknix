@@ -47,6 +47,7 @@ environment.systemPackages = [
   pkgs.git
   pkgs.ntfs3g
   pkgs.xarchiver
+  pkgs.gnomeExtensions.desktop-icons-ng-ding
   pkgs.vim
   pkgs.mpv
   pkgs.ffmpeg
@@ -106,10 +107,11 @@ environment.systemPackages = [
   security.rtkit.enable = true;
   security.polkit.enable = true;
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
+    #driSupport = true;
+    #driSupport32Bit = true;
   };
 
   hardware.xone.enable = true;
