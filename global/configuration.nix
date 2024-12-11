@@ -29,20 +29,6 @@
     LC_TELEPHONE = "it_IT.UTF-8";
     LC_TIME = "it_IT.UTF-8";
   };
-  /*
-
-  powerManagement.enable = true;
-  systemd.sleep.extraConfig = ''
-    AllowHibernation=no
-    AllowHybridSleep=no
-    SuspendState=mem
-  '';
-  services.logind.extraConfig = ''
-    IdleAction=suspend
-    IdelActionSec=1min
-  '';
-
-  */
 
 environment.sessionVariables = {
   EDITOR = "nvim";
@@ -139,7 +125,7 @@ environment.systemPackages = [
     xdg.portal = {
       enable = true;
       config = {common = {default="hyprland";};};
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-wlr pkgs.xdg-desktop-portal-hyprland ];
+      extraPortals = [ pkgs.xdg-desktop-portal-wlr pkgs.xdg-desktop-portal-hyprland ];
     };
 
   users.defaultUserShell = pkgs.zsh;

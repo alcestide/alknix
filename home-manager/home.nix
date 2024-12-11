@@ -23,11 +23,8 @@
       username = "alcestide";
       homeDirectory = "/home/alcestide";
       sessionVariables = {
-      VISUAL="nvim";
-      HYPRSHOT_DIR="$HOME/Pictures/Screenshots";
-      HORUS="/etc/nixos/";
-      DOCS="$HOME/Documents/";
-      CODE="$HOME/Documents/Programming";
+        VISUAL="nvim";
+        HYPRSHOT_DIR="$HOME/Pictures/Screenshots";
       };
     };
 

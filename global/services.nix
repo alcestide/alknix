@@ -2,6 +2,11 @@
 {
 
   services = {
+
+    xserver.enable = true;
+    xserver.displayManager.gdm.enable = true;
+    xserver.desktopManager.gnome.enable = true;
+
     pcscd.enable = true;
     openssh.enable = true;
     printing.enable = true;
@@ -34,7 +39,14 @@
       enable = true;
       openFirewall = true;
     };
-
+/*
+    sunshine = {
+      enable = false;
+      autoStart = true;
+      capSysAdmin = true;
+      openFirewall = true;
+    };
+*/
     avahi = {
     enable = true;
     nssmdns4 = true;

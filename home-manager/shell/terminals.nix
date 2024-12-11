@@ -19,7 +19,7 @@
 	      selection.save_to_clipboard = true;
 	    };
       };
-
+/*
     kitty =  {
       enable = true;
       font.name = "Fira Code";
@@ -28,11 +28,12 @@
         confirm_os_window_close = 0;
       };
     };
-
+*/
     foot = {
       enable = true;
       catppuccin.enable = true;
       settings.main.font =  "Fira Code:size=14";
+      settings.main.term = "xterm-256color";
     };
   };
 }

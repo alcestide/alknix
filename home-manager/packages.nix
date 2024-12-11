@@ -22,6 +22,7 @@
         gnupg
         brightnessctl
         brillo
+        wol
         mtr
         iperf
         dnsutils
@@ -46,7 +47,6 @@
         calc
         calcure
         python3
-        glfw
         gnumake
         nodejs
         rustup
@@ -72,7 +72,6 @@
         yt-dlp
         gallery-dl
         ani-cli
-        mangal
         playerctl
         pulseaudio
         coreutils-prefixed
@@ -87,20 +86,21 @@
         w3m
         pulsemixer
         xboxdrv
-        kdePackages.konsole
 
         # [Desktop Apps]
-        ark
+        gnome.gnome-terminal
+        gnome.gnome-tweaks
         pavucontrol
         pasystray
         blueman
         calibre
         libreoffice
         freetube
+        reaper
         obsidian
         feishin
         telegram-desktop
-        heroic
+        #heroic
         filezilla
         remmina
         tigervnc
@@ -109,10 +109,10 @@
         font-manager
         zathura
         nicotine-plus
-        picard
-        lutris
-        duckstation
-        pcsx2
+        #picard
+        #lutris
+        #duckstation
+        #pcsx2
         obs-studio
         obs-studio-plugins.wlrobs
         obs-studio-plugins.obs-pipewire-audio-capture
