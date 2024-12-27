@@ -4,10 +4,8 @@
   services = {
 
     xserver.enable = true;
-    #xserver.displayManager.lightdm.enable = true;
     xserver.displayManager.gdm.enable = true;
     xserver.desktopManager.gnome.enable = true;
-    #xserver.desktopManager.xfce.enable = true;
     xserver.displayManager.gdm.wayland = true;
 
     pcscd.enable = true;
@@ -42,14 +40,12 @@
       enable = true;
       openFirewall = true;
     };
-/*
     sunshine = {
       enable = false;
       autoStart = true;
       capSysAdmin = true;
       openFirewall = true;
     };
-*/
     avahi = {
     enable = false;
     nssmdns4 = true;
@@ -63,6 +59,17 @@
     };
   };
 
-
+  vsftpd = {
+    enable = true;
+    writeEnable = true;
+    localUsers = true;
+    userlist = [ "alcestide" ];
+    userlistEnable = true;
+    extraConfig = ''
+      pasv_enable=Yes
+      pasv_min_port=51000
+      pasv_max_port=51999
+    '';
+  };
   };
 }

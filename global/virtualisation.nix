@@ -18,4 +18,10 @@ virtualisation.libvirtd = {
       };
     };
   };
+
+  virtualisation.oci-containers = {
+  backend = "docker";
+  };
 }
+
+

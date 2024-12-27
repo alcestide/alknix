@@ -32,7 +32,9 @@
 
 environment.sessionVariables = {
   EDITOR = "nvim";
-  QT_STYLE_OVERRIDE = pkgs.dracula-theme;
+  QT_QPA_PLATFORM="wayland";
+  QT_QPA_PLATFORMTHEME="qt5ct";
+  QT_WAYLAND_DISABLE_WINDOWDECORATION=1;
 };
 
 environment.systemPackages = [
@@ -68,7 +70,6 @@ environment.systemPackages = [
   pkgs.kdePackages.kio-extras-kf5
   pkgs.kdePackages.kio-extras
   pkgs.kdePackages.kio-fuse
-  pkgs.dolphin
   pkgs.libsForQt5.kimageformats
   pkgs.kdePackages.qtimageformats
   pkgs.kdePackages.qtimageformats
@@ -121,12 +122,12 @@ environment.systemPackages = [
 
   xdg.mime.enable = true;
   xdg.mime.addedAssociations = {
-    "inode/directory" = ["dolphin.desktop"];
+    "inode/directory" = ["nautilus.desktop"];
   };
 
     xdg.portal = {
       enable = true;
-      config = {common = {default="hyprland";};};
+      config = {common = {default="gnome";};};
       extraPortals = [ pkgs.xdg-desktop-portal-wlr pkgs.xdg-desktop-portal-hyprland ];
     };
 

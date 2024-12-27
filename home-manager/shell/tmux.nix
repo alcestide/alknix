@@ -5,7 +5,7 @@
         shell = "${pkgs.zsh}/bin/zsh";
 		baseIndex = 1;
 		escapeTime = 0;
-		mouse = true;
+        #mouse = true;
 		keyMode = "emacs";
 		terminal = "xterm-256colo";
 		historyLimit = 100000;
@@ -28,6 +28,7 @@
 			set-option -ga terminal-overrides ',xterm-256color:Tc'\n
             set -g status-left-length 10\n
             set -g status-bg black\n
-            set -g status-fg white";
+            set -g status-fg white\n
+            set -s set-clipboard on";
 	};
   }

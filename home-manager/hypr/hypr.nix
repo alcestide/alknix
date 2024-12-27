@@ -18,6 +18,7 @@ services.hypridle = {
       extraConfig = ''
       ${builtins.readFile ./hyprland/hyprland.conf}
       '';
+      xwayland.enable=true;
     };
 
     services.hyprpaper = {

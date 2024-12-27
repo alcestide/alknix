@@ -63,6 +63,7 @@
         wofi
         xwayland
         wayland-scanner
+        wl-gammactl
         wl-clipboard
         waybar
         clipman
@@ -86,8 +87,11 @@
         w3m
         pulsemixer
         xboxdrv
+        qgnomeplatform
 
         # [Desktop Apps]
+        gns3-server
+        gns3-gui
         gnome-terminal
         gnome-tweaks
         pavucontrol
@@ -100,19 +104,17 @@
         obsidian
         feishin
         telegram-desktop
-        #heroic
+        discord
         filezilla
         remmina
-        tigervnc
+        realvnc-vnc-viewer
         transmission_4-gtk
         gimp
         font-manager
         zathura
         nicotine-plus
-        #picard
-        #lutris
-        #duckstation
-        #pcsx2
+        lime3ds
+        heroic
         obs-studio
         obs-studio-plugins.wlrobs
         obs-studio-plugins.obs-pipewire-audio-capture
